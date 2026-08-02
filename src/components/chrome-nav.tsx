@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { Lock, Moon, Sun, ChevronDown } from "lucide-react";
+import { Lock, Moon, Sun, ChevronDown, ArrowUpRight } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useRouter, useRouterState, Link } from "@tanstack/react-router";
 import { SECTIONS, useActiveSection, type SectionId } from "@/lib/active-section";
@@ -16,14 +16,12 @@ import {
 
 const ALUMNI_URL = "https://drive.google.com/drive/folders/1gfa78hM0S5tYqaCZcpYBY7VYq9QF1dVy";
 
-function HoverWrap({ children, className, type = "NAV" }: { children: ReactNode; className?: string; type?: string }) {
-  const { setHovered, setPressed } = useHoverTarget();
+function HoverWrap({ children, className }: { children: ReactNode; className?: string }) {
+  const { setPressed } = useHoverTarget();
   return (
     <div
       className={className}
-      onPointerEnter={() => setHovered(type)}
       onPointerLeave={() => {
-        setHovered(false);
         setPressed(false);
       }}
       onPointerDown={() => setPressed(true)}
@@ -37,6 +35,7 @@ function HoverWrap({ children, className, type = "NAV" }: { children: ReactNode;
 function Tab({ id, label, active }: { id: SectionId; label: string; active: boolean }) {
   const router = useRouter();
   const state = useRouterState();
+  const [isHovered, setIsHovered] = useState(false);
   const isHome = state.location.pathname === "/";
 
   const handleClick = () => {
@@ -51,13 +50,30 @@ function Tab({ id, label, active }: { id: SectionId; label: string; active: bool
     <HoverWrap className="relative h-9 flex items-end">
       <button
         onClick={handleClick}
-        className={`relative z-10 px-4 h-9 inline-flex items-center text-sm font-medium rounded-t-xl transition-all duration-200 whitespace-nowrap ${
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className={`relative z-10 px-4 h-9 inline-flex items-center text-sm font-medium rounded-t-xl transition-all duration-200 whitespace-nowrap cursor-pointer ${
           active
             ? "text-accent-foreground font-semibold"
             : "text-tab-inactive-fg hover:text-foreground hover:bg-muted/40"
         }`}
       >
-        {label}
+        <span className="relative inline-flex items-center">
+          {label}
+          <AnimatePresence>
+            {isHovered && (
+              <motion.span
+                initial={{ opacity: 0, scale: 0.5, x: 2, y: -2 }}
+                animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+                exit={{ opacity: 0, scale: 0.5, x: 2, y: -2 }}
+                transition={{ duration: 0.15 }}
+                className="absolute -top-1 -right-3.5 text-accent"
+              >
+                <ArrowUpRight className="h-3 w-3 stroke-[2.5]" />
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </span>
       </button>
       {active && (
         <motion.div
@@ -73,17 +89,36 @@ function Tab({ id, label, active }: { id: SectionId; label: string; active: bool
 function YearbookTab() {
   const state = useRouterState();
   const active = state.location.pathname === "/yearbook";
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <HoverWrap className="relative h-9 flex items-end">
       <Link
         to="/yearbook"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         className={`relative z-10 px-4 h-9 inline-flex items-center text-sm font-medium rounded-t-xl transition-all duration-200 whitespace-nowrap ${
           active
             ? "text-accent-foreground font-semibold"
             : "text-tab-inactive-fg hover:text-foreground hover:bg-muted/40"
         }`}
       >
-        Yearbook
+        <span className="relative inline-flex items-center">
+          Yearbook
+          <AnimatePresence>
+            {isHovered && (
+              <motion.span
+                initial={{ opacity: 0, scale: 0.5, x: 2, y: -2 }}
+                animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+                exit={{ opacity: 0, scale: 0.5, x: 2, y: -2 }}
+                transition={{ duration: 0.15 }}
+                className="absolute -top-1 -right-3.5 text-accent"
+              >
+                <ArrowUpRight className="h-3 w-3 stroke-[2.5]" />
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </span>
       </Link>
       {active && (
         <motion.div

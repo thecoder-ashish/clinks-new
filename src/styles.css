@@ -64,8 +64,8 @@
   --color-address-bg: var(--address-bg);
   --color-frame: var(--frame);
   --color-blob: var(--blob);
-  --font-display: "Drop Serif", "Drop", "Instrument Serif", serif;
-  --font-sans: "Drop Serif", "Drop", "Instrument Serif", serif;
+  --font-display: "Cormorant Upright", serif;
+  --font-sans: "Cormorant Upright", serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
@@ -153,6 +153,8 @@
 @layer base {
   * {
     border-color: var(--color-border);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
@@ -169,6 +171,7 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-weight: 400;
   }
 
   body::before {

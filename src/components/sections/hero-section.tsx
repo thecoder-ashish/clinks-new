@@ -6,7 +6,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-14"
+      className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-12 px-4 sm:px-6 overflow-hidden"
     >
       <div
         aria-hidden
@@ -18,7 +18,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="font-display font-bold tracking-tight text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-accent max-w-full leading-none"
+          className="font-display font-semibold tracking-tight text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-accent max-w-full leading-none"
         >
           CROSSLINKS
         </motion.h1>

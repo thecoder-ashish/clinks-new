@@ -25,6 +25,6 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
 export function scrollToId(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
-  if (lenisInstance) lenisInstance.scrollTo(el, { offset: -72 });
+  if (lenisInstance) lenisInstance.scrollTo(el, { offset: 0 });
   else el.scrollIntoView({ behavior: "smooth" });
 }

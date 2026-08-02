@@ -44,7 +44,7 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="min-h-screen py-32 px-6 flex flex-col justify-between">
+    <section id="contact" className="min-h-screen flex flex-col justify-center pt-24 pb-12 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto w-full my-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div
@@ -54,7 +54,7 @@ export function ContactSection() {
             transition={{ duration: 0.6 }}
           >
             <p className="text-accent font-mono text-sm mb-3">// contact</p>
-            <h2 className="font-display font-bold text-4xl md:text-6xl tracking-tight text-accent mb-8">
+            <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent mb-8">
               REACH OUT TO US
             </h2>
 

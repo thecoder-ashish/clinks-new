@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export function AboutSection() {
   return (
-    <section id="about" className="min-h-screen py-32 px-6 flex items-center">
+    <section id="about" className="min-h-screen flex flex-col justify-center items-center pt-24 pb-12 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -11,7 +11,7 @@ export function AboutSection() {
           transition={{ duration: 0.6 }}
         >
           <p className="text-accent font-mono text-sm mb-3">// about us</p>
-          <h2 className="font-display font-bold text-4xl md:text-6xl tracking-tight text-accent">
+          <h2 className="font-display font-semibold text-4xl md:text-6xl tracking-tight text-accent">
             ABOUT US
           </h2>
           <p className="mt-6 text-lg text-muted-foreground leading-relaxed text-justify">

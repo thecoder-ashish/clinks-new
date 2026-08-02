@@ -22,10 +22,10 @@ export function GallerySection() {
   const marqueeRow2 = [...row2, ...row2];
 
   return (
-    <section id="gallery" className="py-32 overflow-hidden flex flex-col justify-center gap-8">
+    <section id="gallery" className="min-h-screen flex flex-col justify-center pt-24 pb-12 overflow-hidden gap-8">
       <div className="max-w-6xl mx-auto px-6 w-full mb-4">
         <p className="text-accent font-mono text-sm mb-3">// gallery</p>
-        <h2 className="font-display font-bold text-4xl md:text-6xl tracking-tight text-accent">
+        <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent">
           GALLERY
         </h2>
       </div>

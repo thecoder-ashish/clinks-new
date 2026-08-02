@@ -302,7 +302,7 @@ export function TeamSection() {
   };
 
   return (
-    <section ref={sectionRef} id="team" className="min-h-screen py-24 sm:py-32 px-4 sm:px-6">
+    <section ref={sectionRef} id="team" className="min-h-screen flex flex-col justify-center pt-24 pb-12 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -313,7 +313,7 @@ export function TeamSection() {
         >
           <div>
             <p className="text-accent font-mono text-sm mb-3">// team</p>
-            <h2 className="font-display font-bold text-4xl md:text-6xl tracking-tight text-accent">
+            <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent">
               WORDS FROM CORE
             </h2>
           </div>

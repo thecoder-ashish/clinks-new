@@ -188,11 +188,11 @@ export function EventsSection() {
   const displayEvents = [...EVENTS, ...EVENTS, ...EVENTS];
 
   return (
-    <section id="events" className="min-h-screen py-32 flex flex-col justify-center relative">
+    <section id="events" className="min-h-screen flex flex-col justify-center pt-24 pb-12 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 w-full flex items-end justify-between mb-12">
         <div>
           <p className="text-accent font-mono text-sm mb-3">// events</p>
-          <h2 className="font-display font-bold text-4xl md:text-6xl tracking-tight text-accent">
+          <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent">
             EVENTS
           </h2>
         </div>

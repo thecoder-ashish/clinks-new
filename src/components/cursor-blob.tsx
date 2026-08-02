@@ -8,6 +8,7 @@ export function CursorBlob() {
   const [enabled, setEnabled] = useState(false);
   const [visible, setVisible] = useState(true);
   const [isImageHovered, setIsImageHovered] = useState(false);
+  const [isNavHovered, setIsNavHovered] = useState(false);
   const { hovered, pressed, hoverText } = useHoverTarget();
 
   const mouseX = useMotionValue(-300);
@@ -17,9 +18,9 @@ export function CursorBlob() {
   const dotX = useSpring(mouseX, { stiffness: 900, damping: 40 });
   const dotY = useSpring(mouseY, { stiffness: 900, damping: 40 });
 
-  // Outer halo ring (smooth trailing spring)
-  const haloX = useSpring(mouseX, { stiffness: 220, damping: 24 });
-  const haloY = useSpring(mouseY, { stiffness: 220, damping: 24 });
+  // Outer halo ring (smooth spring with subtle bouncy catch-up)
+  const haloX = useSpring(mouseX, { stiffness: 340, damping: 14, mass: 0.5 });
+  const haloY = useSpring(mouseY, { stiffness: 340, damping: 14, mass: 0.5 });
 
   // Ambient soft glow (gentle spring)
   const auraX = useSpring(mouseX, { stiffness: 100, damping: 20 });
@@ -47,7 +48,14 @@ export function CursorBlob() {
           target.closest("img") ||
           target.closest("[data-hover-type='image']"))
       );
+      const isNav = !!(
+        target &&
+        (target.closest("header") ||
+          target.closest("nav") ||
+          target.closest("[data-header-nav]"))
+      );
       setIsImageHovered(isImg);
+      setIsNavHovered(isNav);
     };
     const leave = () => setVisible(false);
     const enter = () => setVisible(true);
@@ -63,7 +71,7 @@ export function CursorBlob() {
 
   if (!enabled) return null;
 
-  const isDotHidden = hovered || isImageHovered;
+  const isDotHidden = (hovered || isImageHovered) && !isNavHovered;
 
   return (
     <>
@@ -74,7 +82,7 @@ export function CursorBlob() {
         className="pointer-events-none fixed left-0 top-0 z-[1] h-[140px] w-[140px]"
         animate={{
           scale: pressed ? 0.8 : hovered ? 1.5 : 1,
-          opacity: visible ? (hovered ? 0.35 : 0.2) : 0,
+          opacity: visible ? (isNavHovered ? 0 : hovered ? 0.35 : 0.2) : 0,
         }}
         transition={{ type: "spring", stiffness: 150, damping: 25 }}
       >
@@ -90,10 +98,10 @@ export function CursorBlob() {
         style={{ x: haloX, y: haloY, translateX: "-50%", translateY: "-50%" }}
         className="pointer-events-none fixed left-0 top-0 z-[9998] flex items-center justify-center rounded-full border transition-colors duration-300"
         animate={{
-          width: hovered ? (hoverText === "NAV" ? 28 : hoverText ? 84 : 54) : 36,
-          height: hovered ? (hoverText === "NAV" ? 28 : hoverText ? 36 : 54) : 36,
+          width: hovered ? (hoverText && hoverText !== "NAV" ? 84 : 48) : 36,
+          height: hovered ? (hoverText && hoverText !== "NAV" ? 36 : 48) : 36,
           scale: pressed ? 0.82 : 1,
-          opacity: visible ? 1 : 0,
+          opacity: visible ? (isNavHovered ? 0 : 1) : 0,
           borderColor: hovered ? "var(--color-accent)" : "rgba(var(--color-accent), 0.35)",
           backgroundColor: hovered
             ? "rgba(var(--color-accent), 0.15)"
@@ -106,7 +114,7 @@ export function CursorBlob() {
         transition={{ type: "spring", stiffness: 350, damping: 25 }}
       >
         <AnimatePresence mode="wait">
-          {hovered && (
+          {hovered && !isNavHovered && (
             <motion.div
               key="hover-badge"
               initial={{ opacity: 0, scale: 0.6 }}
@@ -115,9 +123,7 @@ export function CursorBlob() {
               transition={{ duration: 0.15 }}
               className="flex items-center justify-center gap-1 px-1.5 text-center text-accent font-mono text-[10px] font-semibold tracking-wider uppercase whitespace-nowrap select-none"
             >
-              {hoverText === "NAV" ? (
-                <ArrowUpRight className="h-3 w-3 text-accent stroke-[2.5]" />
-              ) : hoverText ? (
+              {hoverText && hoverText !== "NAV" ? (
                 <span>{hoverText}</span>
               ) : (
                 <Sparkles className="h-4 w-4 animate-pulse text-accent" />
