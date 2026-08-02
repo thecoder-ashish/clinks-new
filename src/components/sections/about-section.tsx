@@ -10,7 +10,7 @@ export function AboutSection() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-accent font-mono text-sm mb-3">// about us</p>
+          <p className="font-mono text-sm mb-3 text-foreground/90">// about us</p>
           <h2 className="font-display font-semibold text-4xl md:text-6xl tracking-tight text-accent">
             ABOUT US
           </h2>

@@ -6,37 +6,37 @@ import { useHoverTarget } from "@/lib/hover-target";
 const EVENTS = [
   {
     title: "NSUTTHON",
-    image: "/img/thon.jpg",
+    image: "/img/events/thon.jpg",
     blurb:
       "The annual flagship event of crosslinks. It consists of orientations, auditions , workshops and competitions organised by various societies. It is a team - based event which promotes teamwork and leadership qualities. Every team is credited with specific points for every participation and win. It is a race of being - THE ULTIMATE FRESHER.",
   },
   {
     title: "GARBA NIGHT",
-    image: "/img/garba.jpg",
+    image: "/img/events/garba.jpg",
     blurb:
       "Garba night, a sparkling festive lights and colourful decor with dandiya under the dazzling stars.The university lit up in beautiful purple lights and the vibrant songs echoed through the grounds as the students dressed up in pretty ethnic clothes gathered to dance and have fun.",
   },
   {
     title: "MR. & MS. MOKSHA",
-    image: "/img/moksha.jpg",
+    image: "/img/events/moksha.jpg",
     blurb:
       "Mr. and Ms. Moksha, an event held at our college, is a celebration of charisma, talent, and personality. This competition showcases the finest qualities of students as they compete for the title with confidence and style.",
   },
   {
     title: "SCRIBBLE DAY",
-    image: "/img/scribble.jpg",
+    image: "/img/events/scribble.jpg",
     blurb:
       "Scribble Day is a creative see off to our beloved seniors. Cute, funny and some outrageous messages are signed off on t-shirts and even body parts during the event. Together with music and a lot of pictures to capture memories worth many years.",
   },
   {
     title: "FAREWELL",
-    image: "/img/farewell.jpg",
+    image: "/img/events/farewell.jpg",
     blurb:
       "Farewell day is a bittersweet occasion, marking the end of an important chapter in one's life and the start of a new journey. We at crosslinks organized a farewell day party bidding them a goodbye and wishing them for a new journey in their lives. Their memories and the bonds they formed will always be remembered and will be cherished.",
   },
   {
     title: "ALUMNI MEET",
-    image: "/img/alumni.jpg",
+    image: "/img/events/alumni.jpg",
     blurb:
       "A lovely reunion for all the alumni to reminisce about their good old days together. The alumni gathered to share their experiences with the students and discuss new ideas. The alumni were also facilitated and live music during the evening made the event enjoyable.It was organized in collaboration with Alumni Association, NSUT.",
   },
@@ -53,12 +53,12 @@ function EventCard({ e, i }: { e: (typeof EVENTS)[number]; i: number }) {
     const box = card.getBoundingClientRect();
     const x = event.clientX - box.left - box.width / 2;
     const y = event.clientY - box.top - box.height / 2;
-    
+
     // Repel effect: if hovered on top-left (x < 0, y < 0), that side goes behind (rotateX is negative, rotateY is positive)
     const maxTilt = 12;
     const rotX = (y / (box.height / 2)) * maxTilt;
     const rotY = -(x / (box.width / 2)) * maxTilt;
-    
+
     setRotateX(rotX);
     setRotateY(rotY);
   };
@@ -96,8 +96,8 @@ function EventCard({ e, i }: { e: (typeof EVENTS)[number]; i: number }) {
             ? `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05) translateY(-8px)`
             : `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0px)`,
           transformStyle: "preserve-3d",
-          transition: isHovered 
-            ? "transform 0.1s ease-out" 
+          transition: isHovered
+            ? "transform 0.1s ease-out"
             : "transform 0.3s ease-out",
         }}
       >
@@ -111,40 +111,40 @@ function EventCard({ e, i }: { e: (typeof EVENTS)[number]; i: number }) {
         />
 
         {/* Main Card (translucent glassmorphism) */}
-        <div 
+        <div
           className="w-full rounded-2xl overflow-hidden bg-card/40 backdrop-blur-xl border border-border/50 shadow-md hover:shadow-2xl hover:bg-card/65 transition-all duration-300"
           style={{
             transform: "translateZ(0px)",
             borderColor: isHovered ? "var(--color-accent)" : undefined,
           }}
         >
-          <div 
+          <div
             className="relative w-full aspect-[16/9] overflow-hidden bg-muted"
             style={{ transform: "translateZ(20px)" }}
           >
-          <img
-            src={e.image}
-            alt={e.title}
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-black/10" />
-        </div>
-        <div className="p-6" style={{ transform: "translateZ(30px)" }}>
-          <h3 className="font-display font-bold text-xl text-accent tracking-tight">{e.title}</h3>
-          <motion.div
-            animate={{ height: isHovered ? "auto" : "120px" }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden"
-          >
-            <p className="mt-3 text-sm text-muted-foreground leading-relaxed text-justify pr-1">
-              {e.blurb}
-            </p>
-          </motion.div>
+            <img
+              src={e.image}
+              alt={e.title}
+              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-black/10" />
+          </div>
+          <div className="p-6" style={{ transform: "translateZ(30px)" }}>
+            <h3 className="font-display font-extrabold text-2xl text-accent tracking-tight">{e.title}</h3>
+            <motion.div
+              animate={{ height: isHovered ? "auto" : "120px" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed text-justify pr-1">
+                {e.blurb}
+              </p>
+            </motion.div>
+          </div>
         </div>
       </div>
-    </div>
-  </motion.div>
+    </motion.div>
   );
 }
 
@@ -191,7 +191,7 @@ export function EventsSection() {
     <section id="events" className="min-h-screen flex flex-col justify-center pt-24 pb-12 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 w-full flex items-end justify-between mb-12">
         <div>
-          <p className="text-accent font-mono text-sm mb-3">// events</p>
+          <p className="font-mono text-sm mb-3 text-foreground/90">// events</p>
           <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent">
             EVENTS
           </h2>
@@ -213,7 +213,7 @@ export function EventsSection() {
           </button>
         </div>
       </div>
-      <div 
+      <div
         ref={scrollRef}
         onScroll={handleScroll}
         className="overflow-x-auto scrollbar-none w-full scroll-smooth pt-8 pb-16"

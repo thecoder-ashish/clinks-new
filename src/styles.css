@@ -4,6 +4,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: "Druk Condensed";
+  src: local("Druk Condensed Super"), local("Druk Condensed Bold"), local("Druk Condensed Heavy"), local("Druk Condensed Medium"), local("Druk Condensed"), local("DrukCondensed"), local("Druk-Condensed"), local("Druk Bold"), local("Druk");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
 /*
  * Design system definition.
  *
@@ -66,6 +73,11 @@
   --color-blob: var(--blob);
   --font-display: "Cormorant Upright", serif;
   --font-sans: "Cormorant Upright", serif;
+  --font-druk: "Druk Condensed", "DrukCondensed", "Druk-Condensed", "Druk", "Roboto Condensed", sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
+  --font-roboto: "Roboto", sans-serif;
+  --font-roboto-condensed: "Roboto Condensed", sans-serif;
+  --font-oswald: "Oswald", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 

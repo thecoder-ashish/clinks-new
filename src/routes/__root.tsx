@@ -18,6 +18,7 @@ import { HoverTargetProvider } from "../lib/hover-target";
 import { SmoothScrollProvider } from "../lib/smooth-scroll";
 import { CursorBlob } from "../components/cursor-blob";
 import { ChromeNav } from "../components/chrome-nav";
+import { Preloader } from "../components/preloader";
 
 function NotFoundComponent() {
   return (
@@ -102,7 +103,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Upright:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@200;300;400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;500;700;900&display=swap",
       },
     ],
   }),
@@ -143,24 +144,8 @@ function RootComponent() {
         <HoverTargetProvider>
           <ActiveSectionProvider>
             <SmoothScrollProvider>
-              <AnimatePresence>
-                {loading && (
-                  <motion.div
-                    key="preloader"
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black"
-                    initial={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
-                  >
-                    <motion.div
-                      layoutId="crosslinks-brand"
-                      className="px-6 py-3 text-accent font-display font-bold text-4xl sm:text-6xl md:text-7xl tracking-wider whitespace-nowrap"
-                      transition={{ type: "spring", stiffness: 80, damping: 20 }}
-                    >
-                      CROSSLINKS
-                    </motion.div>
-                  </motion.div>
-                )}
+              <AnimatePresence mode="wait">
+                {loading && <Preloader onComplete={() => setLoading(false)} />}
               </AnimatePresence>
 
               <CursorBlob />

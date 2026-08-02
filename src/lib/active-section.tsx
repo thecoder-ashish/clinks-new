@@ -33,14 +33,16 @@ export function ActiveSectionProvider({ children }: { children: ReactNode }) {
 
     // Wait slightly to ensure elements are fully mounted in the DOM
     const timer = setTimeout(() => {
-      // Check if there is an active hash in the URL and scroll to it
       if (typeof window !== "undefined") {
-        if (window.location.hash) {
+        if (window.location.hash && window.location.hash !== "#about") {
           const hashId = window.location.hash.substring(1);
           scrollToId(hashId);
         } else {
-          // Explicitly scroll back to top of home page
-          window.scrollTo({ top: 0 });
+          // Explicitly scroll to top of home page and clear hash on initial load
+          window.scrollTo({ top: 0, left: 0 });
+          if (window.location.hash) {
+            window.history.replaceState(null, "", window.location.pathname);
+          }
         }
       }
 
@@ -52,6 +54,11 @@ export function ActiveSectionProvider({ children }: { children: ReactNode }) {
       const visible = new Map<string, number>();
       const obs = new IntersectionObserver(
         (entries) => {
+          if (typeof window !== "undefined" && window.scrollY < 120) {
+            setActiveId("hero");
+            return;
+          }
+
           for (const e of entries) {
             visible.set(e.target.id, e.isIntersecting ? e.intersectionRatio : 0);
           }
@@ -76,14 +83,6 @@ export function ActiveSectionProvider({ children }: { children: ReactNode }) {
       cleanup();
     };
   }, [pathname]);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || pathname !== "/") return;
-    const hash = activeId === "hero" ? "" : `#${activeId}`;
-    if (window.location.hash !== hash) {
-      window.history.replaceState(null, "", window.location.pathname + hash);
-    }
-  }, [activeId, pathname]);
 
   return <Ctx.Provider value={{ activeId, isHero: activeId === "hero" }}>{children}</Ctx.Provider>;
 }

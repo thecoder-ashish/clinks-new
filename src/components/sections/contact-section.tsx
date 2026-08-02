@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Instagram, Linkedin, Mail, Facebook, Phone, MapPin, Copy, Check } from "lucide-react";
+import { Instagram, Linkedin, Mail, Facebook, Phone, MapPin, Copy, Check, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import { useHoverTarget } from "@/lib/hover-target";
 import { toast } from "sonner";
@@ -18,14 +18,14 @@ function Fab({ Icon, href, label }: (typeof SOCIALS)[number]) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      onPointerEnter={() => setHovered(true)}
+      onPointerEnter={() => setHovered("SOCIAL")}
       onPointerLeave={() => {
         setHovered(false);
         setPressed(false);
       }}
       onPointerDown={() => setPressed(true)}
       onPointerUp={() => setPressed(false)}
-      className="h-14 w-14 inline-flex items-center justify-center rounded-full bg-accent text-accent-foreground shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:bg-accent/95"
+      className="h-14 w-14 inline-flex items-center justify-center rounded-full bg-accent text-accent-foreground shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:bg-accent/95 cursor-pointer"
     >
       <Icon className="h-5 w-5" />
     </a>
@@ -34,6 +34,7 @@ function Fab({ Icon, href, label }: (typeof SOCIALS)[number]) {
 
 export function ContactSection() {
   const [copied, setCopied] = useState(false);
+  const { setHovered } = useHoverTarget();
   const email = "crosslinks.nsut@gmail.com";
 
   const copyEmail = () => {
@@ -53,7 +54,7 @@ export function ContactSection() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-accent font-mono text-sm mb-3">// contact</p>
+            <p className="font-mono text-sm mb-3 text-foreground/90">// contact</p>
             <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent mb-8">
               REACH OUT TO US
             </h2>
@@ -103,16 +104,19 @@ export function ContactSection() {
         <span className="text-center sm:text-left">
           Copyright ©2026 Crosslinks NSUT - All Rights reserved • Privacy policy
         </span>
-        <span className="font-mono text-accent">  
-        Developed by&nbsp;
-        <a
-          href="https://github.com/ashish-kumar"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:underline"
-        >
-           Ashish Kumar
-        </a>
+        <span className="font-mono text-accent flex items-center">  
+          Developed by&nbsp;
+          <a
+            href="https://github.com/ashish-kumar"
+            target="_blank"
+            rel="noopener noreferrer"
+            onPointerEnter={() => setHovered("ASHISH_KUMAR")}
+            onPointerLeave={() => setHovered(false)}
+            className="inline-flex items-center gap-0.5 text-accent hover:text-white font-semibold transition-colors group cursor-pointer"
+          >
+            Ashish Kumar
+            <ArrowUpRight className="h-3.5 w-3.5 text-accent group-hover:text-white transition-colors shrink-0" />
+          </a>
         </span>
       </div>
     </section>

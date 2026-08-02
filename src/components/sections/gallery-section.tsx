@@ -2,19 +2,19 @@ import { motion } from "framer-motion";
 
 export function GallerySection() {
   const row1 = [
-    "/img/gallery1.jpg",
-    "/img/gallery2.jpg",
-    "/img/gallery3.jpg",
-    "/img/gallery4.jpg",
-    "/img/gallery5.jpg",
+    "/img/gallery/gallery1.jpg",
+    "/img/gallery/gallery2.jpg",
+    "/img/gallery/gallery3.jpg",
+    "/img/gallery/gallery4.jpg",
+    "/img/gallery/gallery5.JPG",
   ];
 
   const row2 = [
-    "/img/gallery5.jpg",
-    "/img/gallery6.jpg",
-    "/img/gallery7.jpg",
-    "/img/gallery8.jpg",
-    "/img/gallery9.jpg",
+    "/img/gallery/gallery5.JPG",
+    "/img/gallery/gallery6.jpg",
+    "/img/gallery/gallery7.jpg",
+    "/img/gallery/gallery8.JPG",
+    "/img/gallery/gallery9.jpg",
   ];
 
   // Duplicate the arrays for seamless looping marquee
@@ -24,7 +24,7 @@ export function GallerySection() {
   return (
     <section id="gallery" className="min-h-screen flex flex-col justify-center pt-24 pb-12 overflow-hidden gap-8">
       <div className="max-w-6xl mx-auto px-6 w-full mb-4">
-        <p className="text-accent font-mono text-sm mb-3">// gallery</p>
+        <p className="font-mono text-sm mb-3 text-foreground/90">// gallery</p>
         <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent">
           GALLERY
         </h2>

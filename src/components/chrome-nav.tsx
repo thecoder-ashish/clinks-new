@@ -1,11 +1,12 @@
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { Lock, Moon, Sun, ChevronDown, ArrowUpRight } from "lucide-react";
+import { Moon, Sun, ChevronDown, ArrowUpRight, Lock, Home } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useRouter, useRouterState, Link } from "@tanstack/react-router";
 import { SECTIONS, useActiveSection, type SectionId } from "@/lib/active-section";
 import { scrollToId } from "@/lib/smooth-scroll";
 import { useTheme } from "@/lib/theme";
 import { useHoverTarget } from "@/lib/hover-target";
+import { JoinUsModal } from "@/components/join-us-modal";
 import {
   Sheet,
   SheetContent,
@@ -21,9 +22,7 @@ function HoverWrap({ children, className }: { children: ReactNode; className?: s
   return (
     <div
       className={className}
-      onPointerLeave={() => {
-        setPressed(false);
-      }}
+      onPointerLeave={() => setPressed(false)}
       onPointerDown={() => setPressed(true)}
       onPointerUp={() => setPressed(false)}
     >
@@ -32,10 +31,21 @@ function HoverWrap({ children, className }: { children: ReactNode; className?: s
   );
 }
 
-function Tab({ id, label, active }: { id: SectionId; label: string; active: boolean }) {
+function NavTab({
+  id,
+  label,
+  active,
+  hasPill,
+  pillVisible,
+}: {
+  id: SectionId;
+  label: string;
+  active: boolean;
+  hasPill: boolean;
+  pillVisible: boolean;
+}) {
   const router = useRouter();
   const state = useRouterState();
-  const [isHovered, setIsHovered] = useState(false);
   const isHome = state.location.pathname === "/";
 
   const handleClick = () => {
@@ -47,91 +57,71 @@ function Tab({ id, label, active }: { id: SectionId; label: string; active: bool
   };
 
   return (
-    <HoverWrap className="relative h-9 flex items-end">
+    <HoverWrap className="relative">
       <button
         onClick={handleClick}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className={`relative z-10 px-4 h-9 inline-flex items-center text-sm font-medium rounded-t-xl transition-all duration-200 whitespace-nowrap cursor-pointer ${
+        className={`relative z-10 px-4 py-2 text-sm sm:text-base font-medium rounded-full transition-colors duration-200 whitespace-nowrap cursor-pointer ${
           active
             ? "text-accent-foreground font-semibold"
-            : "text-tab-inactive-fg hover:text-foreground hover:bg-muted/40"
+            : "text-muted-foreground hover:text-foreground"
         }`}
       >
-        <span className="relative inline-flex items-center">
-          {label}
-          <AnimatePresence>
-            {isHovered && (
-              <motion.span
-                initial={{ opacity: 0, scale: 0.5, x: 2, y: -2 }}
-                animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-                exit={{ opacity: 0, scale: 0.5, x: 2, y: -2 }}
-                transition={{ duration: 0.15 }}
-                className="absolute -top-1 -right-3.5 text-accent"
-              >
-                <ArrowUpRight className="h-3 w-3 stroke-[2.5]" />
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </span>
+        <span>{label}</span>
       </button>
-      {active && (
+      {hasPill && (
         <motion.div
-          layoutId="active-tab"
-          className="absolute inset-x-0 bottom-0 top-0 rounded-t-xl bg-accent shadow-md"
-          transition={{ type: "spring", stiffness: 400, damping: 32 }}
+          layoutId="active-nav-pill"
+          className="absolute inset-0 rounded-full bg-accent shadow-md z-0"
+          initial={false}
+          animate={{ opacity: pillVisible ? 1 : 0 }}
+          transition={{
+            layout: { type: "spring", stiffness: 380, damping: 32 },
+            opacity: { duration: 0.2 },
+          }}
         />
       )}
     </HoverWrap>
   );
 }
 
-function YearbookTab() {
-  const state = useRouterState();
-  const active = state.location.pathname === "/yearbook";
-  const [isHovered, setIsHovered] = useState(false);
-
+function YearbookTab({
+  active,
+  hasPill,
+  pillVisible,
+}: {
+  active: boolean;
+  hasPill: boolean;
+  pillVisible: boolean;
+}) {
   return (
-    <HoverWrap className="relative h-9 flex items-end">
+    <HoverWrap className="relative">
       <Link
         to="/yearbook"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className={`relative z-10 px-4 h-9 inline-flex items-center text-sm font-medium rounded-t-xl transition-all duration-200 whitespace-nowrap ${
+        className={`relative z-10 px-4 py-2 text-sm sm:text-base font-medium rounded-full transition-colors duration-200 whitespace-nowrap ${
           active
             ? "text-accent-foreground font-semibold"
-            : "text-tab-inactive-fg hover:text-foreground hover:bg-muted/40"
+            : "text-muted-foreground hover:text-foreground"
         }`}
       >
-        <span className="relative inline-flex items-center">
-          Yearbook
-          <AnimatePresence>
-            {isHovered && (
-              <motion.span
-                initial={{ opacity: 0, scale: 0.5, x: 2, y: -2 }}
-                animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-                exit={{ opacity: 0, scale: 0.5, x: 2, y: -2 }}
-                transition={{ duration: 0.15 }}
-                className="absolute -top-1 -right-3.5 text-accent"
-              >
-                <ArrowUpRight className="h-3 w-3 stroke-[2.5]" />
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </span>
+        <span>Yearbook</span>
       </Link>
-      {active && (
+      {hasPill && (
         <motion.div
-          layoutId="active-tab"
-          className="absolute inset-x-0 bottom-0 top-0 rounded-t-xl bg-accent shadow-md"
-          transition={{ type: "spring", stiffness: 400, damping: 32 }}
+          layoutId="active-nav-pill"
+          className="absolute inset-0 rounded-full bg-accent shadow-md z-0"
+          initial={false}
+          animate={{ opacity: pillVisible ? 1 : 0 }}
+          transition={{
+            layout: { type: "spring", stiffness: 380, damping: 32 },
+            opacity: { duration: 0.2 },
+          }}
         />
       )}
     </HoverWrap>
   );
 }
 
-function CrosslinksBrand({ isHero, path }: { isHero: boolean; path: string }) {
+function CrosslinksBrand() {
   const router = useRouter();
   const state = useRouterState();
   const isHome = state.location.pathname === "/";
@@ -145,42 +135,15 @@ function CrosslinksBrand({ isHero, path }: { isHero: boolean; path: string }) {
   };
 
   return (
-    <div className="flex items-end justify-center min-w-[260px] h-9">
-      <AnimatePresence mode="wait" initial={false}>
-        {isHero ? (
-          <HoverWrap key="tab" className="h-9 flex items-end">
-            <motion.button
-              layoutId="crosslinks-brand"
-              onClick={handleClick}
-              className="relative h-9 px-6 inline-flex items-center gap-2 rounded-t-xl bg-accent text-accent-foreground font-display font-bold text-base shadow-md cursor-pointer whitespace-nowrap tracking-wide"
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            >
-              <span>Crosslinks</span>
-            </motion.button>
-          </HoverWrap>
-        ) : (
-          <HoverWrap key="pill" className="h-8 flex items-center">
-            <motion.button
-              layoutId="crosslinks-brand"
-              onClick={handleClick}
-              className="h-8 px-4 inline-flex items-center gap-2 rounded-full bg-address-bg/80 backdrop-blur-md border border-border/70 text-foreground/90 text-xs font-mono cursor-pointer whitespace-nowrap hover:border-accent/60 hover:bg-address-bg transition-all duration-300 shadow-sm"
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            >
-              <Lock className="h-3 w-3 shrink-0 text-accent" />
-              <motion.span
-                key={path}
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.18 }}
-                className="whitespace-nowrap"
-              >
-                crosslinks.nsut/{path}
-              </motion.span>
-            </motion.button>
-          </HoverWrap>
-        )}
-      </AnimatePresence>
-    </div>
+    <HoverWrap>
+      <button
+        onClick={handleClick}
+        className="text-sm sm:text-xl tracking-wider hover:opacity-90 transition-opacity cursor-pointer inline-flex items-center whitespace-nowrap px-0.5 sm:px-1"
+      >
+        <span className="font-druk text-foreground font-bold">Cross</span>
+        <span className="font-display text-accent font-bold lowercase">links</span>
+      </button>
+    </HoverWrap>
   );
 }
 
@@ -191,7 +154,7 @@ function ThemeToggle() {
       <button
         aria-label="Toggle theme"
         onClick={toggle}
-        className="h-9 w-9 inline-flex items-center justify-center rounded-full hover:bg-muted text-foreground/80 transition-colors cursor-pointer"
+        className="h-8 sm:h-9 w-8 sm:w-9 inline-flex items-center justify-center rounded-full hover:bg-accent/15 text-foreground/80 transition-colors cursor-pointer shrink-0"
       >
         {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
       </button>
@@ -206,7 +169,7 @@ function AlumniCta() {
         href={ALUMNI_URL}
         target="_blank"
         rel="noreferrer"
-        className="h-9 px-4 inline-flex items-center rounded-full border border-accent/80 text-accent bg-accent/5 backdrop-blur-sm text-sm font-medium transition-all duration-300 hover:bg-accent hover:text-accent-foreground hover:border-accent shadow-sm hover:shadow-md whitespace-nowrap"
+        className="h-9 px-4 inline-flex items-center rounded-full border border-accent/80 text-accent bg-accent/5 backdrop-blur-sm text-xs sm:text-sm font-medium transition-all duration-300 hover:bg-accent hover:text-accent-foreground hover:border-accent shadow-sm hover:shadow-md whitespace-nowrap"
       >
         Alumni Meet '25
       </a>
@@ -215,44 +178,61 @@ function AlumniCta() {
 }
 
 export function ChromeNav() {
-  const { activeId, isHero } = useActiveSection();
+  const { activeId } = useActiveSection();
   const [mobile, setMobile] = useState(false);
   const routerState = useRouterState();
   const isHome = routerState.location.pathname === "/";
-
-  const isBrandTabMode = isHome && isHero;
-
-  const path = routerState.location.pathname === "/yearbook"
-    ? "yearbook"
-    : isHero
-      ? ""
-      : activeId;
+  const isYearbook = routerState.location.pathname === "/yearbook";
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
+    const mq = window.matchMedia("(max-width: 800px)");
     const u = () => setMobile(mq.matches);
     u();
     mq.addEventListener("change", u);
     return () => mq.removeEventListener("change", u);
   }, []);
 
+  const activePillKey = isYearbook
+    ? "yearbook"
+    : isHome && activeId !== "hero"
+      ? activeId
+      : "about";
+  const pillVisible = isYearbook || (isHome && activeId !== "hero");
+
   return (
-    <header className="fixed top-0 inset-x-0 z-40 bg-frame/80 backdrop-blur-xl border-b border-border/50 shadow-sm transition-all duration-300">
-      <div className="max-w-[1400px] mx-auto px-4 h-14 flex items-end gap-3">
+    <header className="fixed top-2.5 sm:top-5 inset-x-0 z-40 px-2.5 sm:px-6 pointer-events-none flex justify-center">
+      <div className="pointer-events-auto max-w-5xl w-full mx-auto px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-accent/20 bg-card/85 backdrop-blur-xl shadow-[0_12px_32px_rgba(0,0,0,0.25)] flex items-center justify-between gap-1.5 sm:gap-4 flex-nowrap transition-all duration-300">
         {mobile ? (
           <MobileNav activeId={activeId} />
         ) : (
-          <LayoutGroup>
-            <div className="flex items-end gap-1 flex-1 pb-0 h-14">
+          <LayoutGroup id="header-nav-pill">
+            {/* Left: Brand Logo */}
+            <div className="flex items-center shrink-0">
+              <CrosslinksBrand />
+            </div>
+
+            {/* Center: Clean Navigation Tabs with Smooth Horizontal Slider Pill */}
+            <div className="flex items-center gap-1">
               {SECTIONS.map((s) => (
-                <Tab key={s.id} id={s.id} label={s.label} active={isHome && activeId === s.id} />
+                <NavTab
+                  key={s.id}
+                  id={s.id}
+                  label={s.label}
+                  active={isHome && activeId === s.id}
+                  hasPill={activePillKey === s.id}
+                  pillVisible={pillVisible}
+                />
               ))}
-              <YearbookTab />
+              <YearbookTab
+                active={isYearbook}
+                hasPill={activePillKey === "yearbook"}
+                pillVisible={pillVisible}
+              />
             </div>
-            <div className={`flex items-end justify-center h-14 w-[260px] flex-shrink-0 transition-all duration-300 ${isBrandTabMode ? "pb-0" : "pb-3"}`}>
-              <CrosslinksBrand isHero={isBrandTabMode} path={path} />
-            </div>
-            <div className="flex items-end gap-2 flex-1 justify-end pb-[10px] h-14">
+
+            {/* Right: Actions */}
+            <div className="flex items-center gap-2 shrink-0">
+              <JoinUsModal />
               <AlumniCta />
               <ThemeToggle />
             </div>
@@ -270,11 +250,13 @@ function MobileNav({ activeId }: { activeId: SectionId }) {
   const isHome = state.location.pathname === "/";
   const isYearbook = state.location.pathname === "/yearbook";
 
-  const current = isYearbook
-    ? "Yearbook"
+  const isAtTop = isHome && activeId === "hero";
+
+  const urlSection = isYearbook
+    ? "yearbook"
     : activeId === "hero"
-      ? "Crosslinks"
-      : SECTIONS.find((s) => s.id === activeId)?.label ?? "";
+      ? "home"
+      : activeId;
 
   const handleNav = (id: string) => {
     if (isHome) {
@@ -285,62 +267,111 @@ function MobileNav({ activeId }: { activeId: SectionId }) {
     setOpen(false);
   };
 
-  return (
-    <div className="flex items-end justify-between w-full h-14 pb-0">
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>
-          <button className="h-9 px-4 inline-flex items-center gap-2 rounded-t-xl bg-accent text-accent-foreground text-sm font-medium shadow-sm cursor-pointer whitespace-nowrap">
-            {current}
-            <ChevronDown className="h-4 w-4" />
-          </button>
-        </SheetTrigger>
-        <SheetContent side="top" className="pt-10 bg-background/95 backdrop-blur-xl border-b border-border/60">
-          <SheetHeader>
-            <SheetTitle className="font-display text-accent text-2xl">Crosslinks</SheetTitle>
-          </SheetHeader>
-          <div className="mt-6 flex flex-col gap-1">
-            <button
-              className="text-left px-4 py-3 rounded-lg hover:bg-muted/60 font-medium text-foreground transition-colors"
-              onClick={() => {
-                if (isHome) {
-                  scrollToId("hero");
-                } else {
-                  router.navigate({ to: "/" });
-                }
-                setOpen(false);
-              }}
-            >
-              Home
-            </button>
-            {SECTIONS.map((s) => (
-              <button
-                key={s.id}
-                className="text-left px-4 py-3 rounded-lg hover:bg-muted/60 font-medium text-foreground transition-colors"
-                onClick={() => handleNav(s.id)}
-              >
-                {s.label}
-              </button>
-            ))}
-            <Link
-              to="/yearbook"
-              className="text-left px-4 py-3 rounded-lg hover:bg-muted/60 font-medium text-foreground transition-colors"
-              onClick={() => setOpen(false)}
-            >
-              Yearbook
-            </Link>
-            <a
-              href={ALUMNI_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-3 px-4 py-3 rounded-lg bg-accent text-accent-foreground text-center font-medium shadow-sm"
-            >
-              Alumni Meet '25
-            </a>
-          </div>
-        </SheetContent>
-      </Sheet>
+  const handleGoHome = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isHome) {
+      scrollToId("hero");
+    } else {
+      router.navigate({ to: "/" });
+    }
+  };
 
-      <div className="flex items-center justify-end pb-2">
+  return (
+    <div className="flex items-center justify-between w-full min-w-0 gap-1.5 flex-nowrap">
+      <AnimatePresence mode="wait">
+        {isAtTop ? (
+          <motion.div
+            key="hero-brand"
+            initial={{ opacity: 0, x: -8 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -8 }}
+            transition={{ duration: 0.2 }}
+            className="flex items-center shrink-0"
+          >
+            <CrosslinksBrand />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="scrolled-bar"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="flex-1 min-w-0 flex items-center justify-start pr-1"
+          >
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <button className="h-8 w-full max-w-[210px] px-3 inline-flex items-center justify-between gap-1.5 rounded-full border border-accent/35 bg-muted/70 hover:bg-muted/95 text-foreground shadow-sm cursor-pointer whitespace-nowrap min-w-0 transition-colors">
+                  <span
+                    onClick={handleGoHome}
+                    title="Go to top"
+                    className="p-0.5 rounded-full hover:bg-accent/20 transition-colors flex items-center justify-center shrink-0"
+                  >
+                    <Home className="h-3.5 w-3.5 text-accent shrink-0" />
+                  </span>
+                  <span className="truncate text-xs font-mono text-foreground/90 tracking-tight">
+                    crosslinks/{urlSection}
+                  </span>
+                  <ChevronDown className="h-3.5 w-3.5 text-accent shrink-0 ml-0.5" />
+                </button>
+              </SheetTrigger>
+              <SheetContent side="top" className="pt-10 bg-background/95 backdrop-blur-xl border-b border-border/60">
+                <SheetHeader>
+                  <SheetTitle className="text-2xl tracking-wider">
+                    <span className="font-druk text-foreground font-bold">Cross</span>
+                    <span className="font-display text-accent font-bold lowercase">links</span>
+                  </SheetTitle>
+                </SheetHeader>
+                <div className="mt-6 flex flex-col gap-1">
+                  <button
+                    className="text-left px-4 py-3 rounded-lg hover:bg-muted/60 font-medium text-foreground transition-colors"
+                    onClick={() => {
+                      if (isHome) {
+                        scrollToId("hero");
+                      } else {
+                        router.navigate({ to: "/" });
+                      }
+                      setOpen(false);
+                    }}
+                  >
+                    Home
+                  </button>
+                  {SECTIONS.map((s) => (
+                    <button
+                      key={s.id}
+                      className="text-left px-4 py-3 rounded-lg hover:bg-muted/60 font-medium text-foreground transition-colors"
+                      onClick={() => handleNav(s.id)}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                  <Link
+                    to="/yearbook"
+                    className="text-left px-4 py-3 rounded-lg hover:bg-muted/60 font-medium text-foreground transition-colors"
+                    onClick={() => setOpen(false)}
+                  >
+                    Yearbook
+                  </Link>
+                  <div className="mt-3 flex flex-col gap-2">
+                    <JoinUsModal triggerClass="w-full py-2.5 rounded-lg bg-accent text-accent-foreground text-center font-semibold text-sm shadow-md hover:opacity-95 transition-opacity inline-flex items-center justify-center gap-1.5 cursor-pointer" />
+                    <a
+                      href={ALUMNI_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-full py-2.5 rounded-lg border border-accent/80 text-accent text-center font-medium text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+                    >
+                      Alumni Meet '25
+                    </a>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Right: Theme Toggle */}
+      <div className="shrink-0 flex items-center">
         <ThemeToggle />
       </div>
     </div>

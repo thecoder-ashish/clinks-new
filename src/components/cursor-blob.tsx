@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion, AnimatePresence } from "framer-motion";
 import { useHoverTarget } from "@/lib/hover-target";
-import { Sparkles, ArrowUpRight } from "lucide-react";
+import { Sparkles, Share2 } from "lucide-react";
 
 export function CursorBlob() {
   const reduced = useReducedMotion();
@@ -71,26 +71,19 @@ export function CursorBlob() {
 
   if (!enabled) return null;
 
-  const isDotHidden = (hovered || isImageHovered) && !isNavHovered;
+  const isAshishHovered = hoverText === "ASHISH_KUMAR";
+  const isSocialHovered = hoverText === "SOCIAL";
+  const isDotHidden = (hovered || isImageHovered || isSocialHovered) && !isNavHovered && !isAshishHovered;
 
   return (
     <>
-      {/* 1. Ambient Soft Background Glow */}
+      {/* 1. Ambient Background Spotlight Glow */}
       <motion.div
         aria-hidden
-        style={{ x: auraX, y: auraY, translateX: "-50%", translateY: "-50%" }}
-        className="pointer-events-none fixed left-0 top-0 z-[1] h-[140px] w-[140px]"
-        animate={{
-          scale: pressed ? 0.8 : hovered ? 1.5 : 1,
-          opacity: visible ? (isNavHovered ? 0 : hovered ? 0.35 : 0.2) : 0,
-        }}
-        transition={{ type: "spring", stiffness: 150, damping: 25 }}
-      >
-        <div
-          className="h-full w-full rounded-full"
-          style={{ background: "var(--color-accent)", filter: "blur(50px)" }}
-        />
-      </motion.div>
+        style={{ x: haloX, y: haloY, translateX: "-50%", translateY: "-50%" }}
+        className="pointer-events-none fixed left-0 top-0 z-[9990] h-64 w-64 rounded-full bg-accent/5 blur-3xl transition-opacity duration-500"
+        animate={{ opacity: visible ? 1 : 0 }}
+      />
 
       {/* 2. Magnetic Outer Halo Ring / Card Hover Spotlight */}
       <motion.div
@@ -98,33 +91,39 @@ export function CursorBlob() {
         style={{ x: haloX, y: haloY, translateX: "-50%", translateY: "-50%" }}
         className="pointer-events-none fixed left-0 top-0 z-[9998] flex items-center justify-center rounded-full border transition-colors duration-300"
         animate={{
-          width: hovered ? (hoverText && hoverText !== "NAV" ? 84 : 48) : 36,
-          height: hovered ? (hoverText && hoverText !== "NAV" ? 36 : 48) : 36,
+          width: hovered ? (isSocialHovered ? 36 : hoverText && hoverText !== "NAV" && !isAshishHovered ? 84 : 48) : 36,
+          height: hovered ? (isSocialHovered ? 36 : hoverText && hoverText !== "NAV" && !isAshishHovered ? 36 : 48) : 36,
           scale: pressed ? 0.82 : 1,
-          opacity: visible ? (isNavHovered ? 0 : 1) : 0,
-          borderColor: hovered ? "var(--color-accent)" : "rgba(var(--color-accent), 0.35)",
-          backgroundColor: hovered
-            ? "rgba(var(--color-accent), 0.15)"
-            : "rgba(var(--color-accent), 0.03)",
-          backdropFilter: hovered ? "blur(8px)" : "blur(2px)",
-          boxShadow: hovered
-            ? "0 0 25px rgba(var(--color-accent), 0.35), inset 0 0 12px rgba(var(--color-accent), 0.2)"
-            : "0 0 10px rgba(0, 0, 0, 0.05)",
+          opacity: visible ? (isNavHovered || isAshishHovered ? 0 : 1) : 0,
+          borderColor: isSocialHovered ? "transparent" : hovered ? "var(--color-accent)" : "rgba(var(--color-accent), 0.35)",
+          backgroundColor: isSocialHovered
+            ? "transparent"
+            : hovered
+              ? "rgba(var(--color-accent), 0.15)"
+              : "rgba(var(--color-accent), 0.03)",
+          backdropFilter: isSocialHovered ? "none" : hovered ? "blur(8px)" : "blur(2px)",
+          boxShadow: isSocialHovered
+            ? "none"
+            : hovered
+              ? "0 0 25px rgba(var(--color-accent), 0.35), inset 0 0 12px rgba(var(--color-accent), 0.2)"
+              : "0 0 10px rgba(0, 0, 0, 0.05)",
         }}
         transition={{ type: "spring", stiffness: 350, damping: 25 }}
       >
         <AnimatePresence mode="wait">
-          {hovered && !isNavHovered && (
+          {hovered && !isNavHovered && !isAshishHovered && (
             <motion.div
               key="hover-badge"
               initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.6 }}
               transition={{ duration: 0.15 }}
-              className="flex items-center justify-center gap-1 px-1.5 text-center text-accent font-mono text-[10px] font-semibold tracking-wider uppercase whitespace-nowrap select-none"
+              className="flex items-center justify-center gap-1 px-1.5 text-center font-mono text-[10px] font-semibold tracking-wider uppercase whitespace-nowrap select-none"
             >
-              {hoverText && hoverText !== "NAV" ? (
-                <span>{hoverText}</span>
+              {isSocialHovered ? (
+                <Share2 className="h-6 w-6 text-white filter drop-shadow-[0_0_8px_rgba(255,255,255,0.9)] animate-pulse" />
+              ) : hoverText && hoverText !== "NAV" ? (
+                <span className="text-accent">{hoverText}</span>
               ) : (
                 <Sparkles className="h-4 w-4 animate-pulse text-accent" />
               )}
@@ -137,7 +136,11 @@ export function CursorBlob() {
       <motion.div
         aria-hidden
         style={{ x: dotX, y: dotY, translateX: "-50%", translateY: "-50%" }}
-        className="pointer-events-none fixed left-0 top-0 z-[9999] h-2 w-2 rounded-full bg-accent shadow-[0_0_8px_var(--color-accent)]"
+        className={`pointer-events-none fixed left-0 top-0 z-[9999] h-2 w-2 rounded-full transition-colors duration-200 ${
+          isAshishHovered || isSocialHovered
+            ? "bg-white shadow-[0_0_8px_#ffffff]"
+            : "bg-accent shadow-[0_0_8px_var(--color-accent)]"
+        }`}
         animate={{
           scale: pressed ? 0.5 : isDotHidden ? 0 : 1,
           opacity: visible ? (isDotHidden ? 0 : 1) : 0,
