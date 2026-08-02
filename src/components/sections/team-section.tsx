@@ -134,9 +134,7 @@ function MemberCard({
         {/* Main Card Content Container */}
         <div
           className={`p-6 rounded-2xl shadow-sm flex flex-col justify-between transition-all duration-300 ${
-            i % 2 === 0 
-              ? "bg-card/45 backdrop-blur-md border border-border/50" 
-              : "bg-card border border-border"
+            "bg-card border border-border"
           }`}
           style={{
             transform: "translateZ(0px)",

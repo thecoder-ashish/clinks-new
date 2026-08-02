@@ -18,7 +18,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="font-display font-bold tracking-tight text-6xl md:text-8xl text-accent"
+          className="font-display font-bold tracking-tight text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-accent max-w-full leading-none"
         >
           CROSSLINKS
         </motion.h1>
@@ -26,7 +26,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.6 }}
-          className="mt-4 font-display text-xl tracking-[0.2em] sm:text-2xl md:text-3xl text-foreground/80 font-medium"
+          className="mt-3 sm:mt-4 font-display text-xs sm:text-lg md:text-xl tracking-[0.25em] text-foreground/75 font-medium uppercase"
         >
           THE FACE OF NSUT
         </motion.h2>

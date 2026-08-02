@@ -110,13 +110,9 @@ function EventCard({ e, i }: { e: (typeof EVENTS)[number]; i: number }) {
           }}
         />
 
-        {/* Main Card (with overflow-hidden) */}
+        {/* Main Card (translucent glassmorphism) */}
         <div 
-          className={`w-full rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 ${
-            i % 2 === 0 
-              ? "bg-card/45 backdrop-blur-md border border-border/50" 
-              : "bg-card border border-border"
-          }`}
+          className="w-full rounded-2xl overflow-hidden bg-card/40 backdrop-blur-xl border border-border/50 shadow-md hover:shadow-2xl hover:bg-card/65 transition-all duration-300"
           style={{
             transform: "translateZ(0px)",
             borderColor: isHovered ? "var(--color-accent)" : undefined,

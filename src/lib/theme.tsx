@@ -4,11 +4,10 @@ type Theme = "light" | "dark";
 const Ctx = createContext<{ theme: Theme; toggle: () => void }>({ theme: "light", toggle: () => {} });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>("dark");
   useEffect(() => {
     const stored = localStorage.getItem("theme") as Theme | null;
-    const sys = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    setTheme(stored ?? sys);
+    setTheme(stored ?? "dark");
   }, []);
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
