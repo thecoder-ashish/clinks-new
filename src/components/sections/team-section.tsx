@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useHoverTarget } from "@/lib/hover-target";
 
@@ -59,12 +59,16 @@ function MemberCard({
   image,
   quote,
   i,
+  isExpanded,
+  onCardClick,
 }: {
   name: string;
   role: string;
   image: string;
   quote: string;
   i: number;
+  isExpanded: boolean;
+  onCardClick: (name: string) => void;
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const { setHovered, setPressed } = useHoverTarget();
@@ -72,13 +76,31 @@ function MemberCard({
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
 
+  const active = isHovered || isExpanded;
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    setPressed(true);
+    onCardClick(name);
+
+    const card = event.currentTarget;
+    const box = card.getBoundingClientRect();
+    const x = event.clientX - box.left - box.width / 2;
+    const y = event.clientY - box.top - box.height / 2;
+
+    const maxTilt = 12;
+    const rotX = -(y / (box.height / 2)) * maxTilt;
+    const rotY = (x / (box.width / 2)) * maxTilt;
+
+    setRotateX(rotX);
+    setRotateY(rotY);
+  };
+
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     const card = event.currentTarget;
     const box = card.getBoundingClientRect();
     const x = event.clientX - box.left - box.width / 2;
     const y = event.clientY - box.top - box.height / 2;
     
-    // Repel effect: if hovered on top-left (x < 0, y < 0), that side goes behind (rotateX is negative, rotateY is positive)
     const maxTilt = 12;
     const rotX = -(y / (box.height / 2)) * maxTilt;
     const rotY = (x / (box.width / 2)) * maxTilt;
@@ -102,22 +124,26 @@ function MemberCard({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: i * 0.05 }}
       className="relative h-[230px] w-full"
+      data-team-card
     >
       <div
-        onMouseEnter={() => setIsHovered(true)}
+        onMouseEnter={() => {
+          setIsHovered(true);
+          setHovered(true);
+        }}
         onPointerLeave={handleMouseLeave}
-        onPointerDown={() => setPressed(true)}
+        onPointerDown={handlePointerDown}
         onPointerUp={() => setPressed(false)}
         onMouseMove={handleMouseMove}
         className={`absolute top-0 inset-x-0 rounded-2xl cursor-pointer ${
-          isHovered ? "z-20" : "z-10"
+          active ? "z-20" : "z-10"
         }`}
         style={{
-          transform: isHovered
+          transform: active
             ? `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.05)`
             : `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)`,
           transformStyle: "preserve-3d",
-          transition: isHovered 
+          transition: active 
             ? "transform 0.1s ease-out" 
             : "transform 0.3s ease-out",
         }}
@@ -127,19 +153,17 @@ function MemberCard({
           className="absolute inset-0 rounded-2xl bg-accent/15 opacity-0 transition-opacity duration-300 blur-2xl pointer-events-none"
           style={{
             transform: "translateZ(-20px) scale(0.95)",
-            opacity: isHovered ? 1 : 0,
+            opacity: active ? 1 : 0,
           }}
         />
 
         {/* Main Card Content Container */}
         <div
-          className={`p-6 rounded-2xl shadow-sm flex flex-col justify-between transition-all duration-300 ${
-            "bg-card border border-border"
-          }`}
+          className="p-6 rounded-2xl shadow-sm flex flex-col justify-between transition-all duration-300 bg-card border border-border"
           style={{
             transform: "translateZ(0px)",
-            borderColor: isHovered ? "var(--color-accent)" : undefined,
-            boxShadow: isHovered ? "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" : "none",
+            borderColor: active ? "var(--color-accent)" : undefined,
+            boxShadow: active ? "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" : "none",
           }}
         >
           <div style={{ transform: "translateZ(20px)" }}>
@@ -155,7 +179,7 @@ function MemberCard({
           {quote && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
-              animate={{ height: isHovered ? "auto" : 0, opacity: isHovered ? 1 : 0 }}
+              animate={{ height: active ? "auto" : 0, opacity: active ? 1 : 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="overflow-hidden"
               style={{ transform: "translateZ(30px)" }}
@@ -172,6 +196,21 @@ function MemberCard({
 }
 
 export function TeamSection() {
+  const [activeName, setActiveName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!activeName) return;
+    const handleOutsideClick = (e: PointerEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest("[data-team-card]")) {
+        setActiveName(null);
+      }
+    };
+
+    window.addEventListener("pointerdown", handleOutsideClick);
+    return () => window.removeEventListener("pointerdown", handleOutsideClick);
+  }, [activeName]);
+
   return (
     <section id="team" className="min-h-screen py-32 px-6">
       <div className="max-w-6xl mx-auto">
@@ -188,7 +227,13 @@ export function TeamSection() {
         </motion.div>
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 items-start">
           {MEMBERS.map((m, i) => (
-            <MemberCard key={m.name} {...m} i={i} />
+            <MemberCard
+              key={m.name}
+              {...m}
+              i={i}
+              isExpanded={activeName === m.name}
+              onCardClick={(name) => setActiveName(name)}
+            />
           ))}
         </div>
       </div>
