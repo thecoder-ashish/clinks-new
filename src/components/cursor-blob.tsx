@@ -42,20 +42,20 @@ export function CursorBlob() {
 
   if (!enabled) return null;
 
-  const scale = pressed ? 0.85 : hovered ? 1.5 : 1;
-  const opacity = visible ? (pressed ? 0.4 : hovered ? 0.8 : 0.6) : 0;
+  const scale = pressed ? 0.85 : hovered ? 1.35 : 1;
+  const opacity = visible ? (pressed ? 0.45 : hovered ? 0.75 : 0.55) : 0;
 
   return (
     <motion.div
       aria-hidden
       style={{ x: sx, y: sy, translateX: "-50%", translateY: "-50%" }}
-      className="pointer-events-none fixed left-0 top-0 z-[1] h-[180px] w-[180px]"
+      className="pointer-events-none fixed left-0 top-0 z-[1] h-[90px] w-[90px]"
       animate={{ scale, opacity }}
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      transition={{ type: "spring", stiffness: 220, damping: 22 }}
     >
       <div
         className="h-full w-full rounded-full"
-        style={{ background: "var(--color-blob)", filter: "blur(40px)" }}
+        style={{ background: "var(--color-blob)", filter: "blur(24px)" }}
       />
     </motion.div>
   );
