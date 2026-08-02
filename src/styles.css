@@ -64,8 +64,8 @@
   --color-address-bg: var(--address-bg);
   --color-frame: var(--frame);
   --color-blob: var(--blob);
-  --font-display: "Bodoni Moda", serif;
-  --font-sans: "Bodoni Moda", serif;
+  --font-display: "Drop Serif", "Drop", "Instrument Serif", serif;
+  --font-sans: "Drop Serif", "Drop", "Instrument Serif", serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
@@ -153,6 +153,16 @@
 @layer base {
   * {
     border-color: var(--color-border);
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
+  }
+
+  ::-moz-selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
   }
 
   body {

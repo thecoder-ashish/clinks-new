@@ -16,12 +16,12 @@ import {
 
 const ALUMNI_URL = "https://drive.google.com/drive/folders/1gfa78hM0S5tYqaCZcpYBY7VYq9QF1dVy";
 
-function HoverWrap({ children, className }: { children: ReactNode; className?: string }) {
+function HoverWrap({ children, className, type = "NAV" }: { children: ReactNode; className?: string; type?: string }) {
   const { setHovered, setPressed } = useHoverTarget();
   return (
     <div
       className={className}
-      onPointerEnter={() => setHovered(true)}
+      onPointerEnter={() => setHovered(type)}
       onPointerLeave={() => {
         setHovered(false);
         setPressed(false);
