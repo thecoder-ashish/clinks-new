@@ -10,9 +10,9 @@ export function AboutSection() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <p className="font-mono text-sm mb-3 text-foreground/90">// about us</p>
+          <p className="font-mono text-sm mb-3 text-foreground/90">// ABOUT US</p>
           <h2 className="font-display font-semibold text-4xl md:text-6xl tracking-tight text-accent">
-            ABOUT US
+            about us
           </h2>
           <p className="mt-6 text-lg text-muted-foreground leading-relaxed text-justify">
             Crosslinks is the Student & Public Relations Society of NSUT. It is one of the most

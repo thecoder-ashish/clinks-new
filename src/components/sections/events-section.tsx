@@ -191,9 +191,9 @@ export function EventsSection() {
     <section id="events" className="min-h-screen flex flex-col justify-center pt-24 pb-12 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 w-full flex items-end justify-between mb-12">
         <div>
-          <p className="font-mono text-sm mb-3 text-foreground/90">// events</p>
+          <p className="font-mono text-sm mb-3 text-foreground/90">// EVENTS</p>
           <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent">
-            EVENTS
+            events
           </h2>
         </div>
         <div className="flex gap-3">

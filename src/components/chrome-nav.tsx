@@ -138,10 +138,18 @@ function CrosslinksBrand() {
     <HoverWrap>
       <button
         onClick={handleClick}
-        className="text-sm sm:text-xl tracking-wider hover:opacity-90 transition-opacity cursor-pointer inline-flex items-center whitespace-nowrap px-0.5 sm:px-1"
+        className="hover:opacity-90 transition-opacity cursor-pointer flex items-center px-0.5 sm:px-1"
       >
-        <span className="font-druk text-foreground font-bold">Cross</span>
-        <span className="font-display text-accent font-bold lowercase">links</span>
+        <img
+          src="/img/logo-black.png"
+          alt="Crosslinks Logo"
+          className="hidden dark:block h-9 sm:h-11 w-auto object-contain transition-all"
+        />
+        <img
+          src="/img/logo-white.png"
+          alt="Crosslinks Logo"
+          className="block dark:hidden h-9 sm:h-11 w-auto object-contain transition-all"
+        />
       </button>
     </HoverWrap>
   );
@@ -317,9 +325,8 @@ function MobileNav({ activeId }: { activeId: SectionId }) {
               </SheetTrigger>
               <SheetContent side="top" className="pt-10 bg-background/95 backdrop-blur-xl border-b border-border/60">
                 <SheetHeader>
-                  <SheetTitle className="text-2xl tracking-wider">
-                    <span className="font-druk text-foreground font-bold">Cross</span>
-                    <span className="font-display text-accent font-bold lowercase">links</span>
+                  <SheetTitle className="text-2xl tracking-wider flex items-center">
+                    <CrosslinksBrand />
                   </SheetTitle>
                 </SheetHeader>
                 <div className="mt-6 flex flex-col gap-1">

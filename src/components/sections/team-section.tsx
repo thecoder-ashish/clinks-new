@@ -372,9 +372,9 @@ export function TeamSection() {
           className="flex items-end justify-between gap-4"
         >
           <div>
-            <p className="font-mono text-sm mb-3 text-foreground/90">// team</p>
+            <p className="font-mono text-sm mb-3 text-foreground/90">// TEAM</p>
             <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent">
-              WORDS FROM CORE
+              words from core
             </h2>
           </div>
           {/* Mobile Carousel Arrow Controls & Step Counter */}

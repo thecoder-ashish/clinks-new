@@ -24,9 +24,9 @@ export function GallerySection() {
   return (
     <section id="gallery" className="min-h-screen flex flex-col justify-center pt-24 pb-12 overflow-hidden gap-8">
       <div className="max-w-6xl mx-auto px-6 w-full mb-4">
-        <p className="font-mono text-sm mb-3 text-foreground/90">// gallery</p>
+        <p className="font-mono text-sm mb-3 text-foreground/90">// GALLERY</p>
         <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent">
-          GALLERY
+          gallery
         </h2>
       </div>
 

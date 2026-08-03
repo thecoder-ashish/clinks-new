@@ -54,9 +54,9 @@ export function ContactSection() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <p className="font-mono text-sm mb-3 text-foreground/90">// contact</p>
+            <p className="font-mono text-sm mb-3 text-foreground/90">// CONTACT</p>
             <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent mb-8">
-              REACH OUT TO US
+              reach out to us
             </h2>
 
             <div className="flex flex-col gap-6 font-sans text-lg text-muted-foreground">
@@ -104,12 +104,13 @@ export function ContactSection() {
         <span className="text-center sm:text-left">
           Copyright ©2026 Crosslinks NSUT - All Rights reserved • Privacy policy
         </span>
-        <span className="font-mono text-accent flex items-center">  
+        <span className="font-mono text-accent flex items-center">
           Developed by&nbsp;
           <a
-            href="https://github.com/ashish-kumar"
+            href="https://www.linkedin.com/in/ashish-kumar-103587378?utm_source=share_via&utm_content=profile&utm_medium=member_android"
             target="_blank"
             rel="noopener noreferrer"
+
             onPointerEnter={() => setHovered("ASHISH_KUMAR")}
             onPointerLeave={() => setHovered(false)}
             className="inline-flex items-center gap-0.5 text-accent hover:text-white font-semibold transition-colors group cursor-pointer"
