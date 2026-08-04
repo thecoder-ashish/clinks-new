@@ -42,8 +42,49 @@ function MemberCard({
   onCardClick: (name: string) => void;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
   const { setHovered, setPressed } = useHoverTarget();
   const active = isHovered || isExpanded;
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    setPressed(true);
+    onCardClick(name);
+
+    const card = event.currentTarget;
+    const box = card.getBoundingClientRect();
+    const x = event.clientX - box.left - box.width / 2;
+    const y = event.clientY - box.top - box.height / 2;
+
+    const maxTilt = 10;
+    const rotX = -(y / (box.height / 2)) * maxTilt;
+    const rotY = (x / (box.width / 2)) * maxTilt;
+
+    setRotateX(rotX);
+    setRotateY(rotY);
+  };
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const card = event.currentTarget;
+    const box = card.getBoundingClientRect();
+    const x = event.clientX - box.left - box.width / 2;
+    const y = event.clientY - box.top - box.height / 2;
+
+    const maxTilt = 10;
+    const rotX = -(y / (box.height / 2)) * maxTilt;
+    const rotY = (x / (box.width / 2)) * maxTilt;
+
+    setRotateX(rotX);
+    setRotateY(rotY);
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
+    setPressed(false);
+    setIsHovered(false);
+    setRotateX(0);
+    setRotateY(0);
+  };
 
   return (
     <motion.div
@@ -59,24 +100,28 @@ function MemberCard({
           setIsHovered(true);
           setHovered("QUOTE");
         }}
-        onMouseLeave={() => {
-          setHovered(false);
-          setPressed(false);
-          setIsHovered(false);
-        }}
-        onPointerDown={() => {
-          setPressed(true);
-          onCardClick(name);
-        }}
+        onMouseLeave={handleMouseLeave}
+        onPointerDown={handlePointerDown}
         onPointerUp={() => setPressed(false)}
+        onMouseMove={handleMouseMove}
         className={`absolute top-0 inset-x-0 rounded-2xl cursor-pointer transition-all duration-300 ${
-          active ? "z-40 -translate-y-2 scale-[1.03]" : "z-10 translate-y-0 scale-100"
+          active ? "z-40" : "z-10"
         }`}
+        style={{
+          transform: active
+            ? `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.04)`
+            : `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)`,
+          transformStyle: "preserve-3d",
+          transition: active ? "transform 0.08s ease-out" : "transform 0.3s ease-out",
+        }}
       >
         {/* Soft Backlight Side Glow on hover */}
         <div
           className="absolute -inset-1 rounded-3xl bg-accent/20 transition-opacity duration-500 blur-xl pointer-events-none"
-          style={{ opacity: active ? 1 : 0 }}
+          style={{
+            transform: "translateZ(-20px) scale(0.95)",
+            opacity: active ? 1 : 0,
+          }}
         />
 
         {/* Main Card Content Container */}
@@ -84,8 +129,9 @@ function MemberCard({
           className={`p-6 sm:p-7 rounded-2xl transition-all duration-300 bg-card border shadow-sm relative z-10 ${
             active ? "border-accent/80 shadow-md" : "border-border/70"
           }`}
+          style={{ transform: "translateZ(0px)" }}
         >
-          <div>
+          <div style={{ transform: "translateZ(20px)" }}>
             <div className="h-24 w-24 sm:h-28 sm:w-28 rounded-full overflow-hidden bg-muted mx-auto ring-2 ring-accent/40 flex-shrink-0 transition-transform duration-300">
               <img src={image} alt={name} className="h-full w-full object-cover" />
             </div>
@@ -101,6 +147,7 @@ function MemberCard({
               animate={{ height: active ? "auto" : 0, opacity: active ? 1 : 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="overflow-hidden"
+              style={{ transform: "translateZ(30px)" }}
             >
               <p className="mt-4 text-xs sm:text-sm italic text-foreground/90 font-medium text-center border-t border-border/50 pt-3 leading-relaxed font-sans">
                 "{quote}"
@@ -172,6 +219,7 @@ export function TeamSection() {
   const [activeMobileIndex, setActiveMobileIndex] = useState(0);
   const [userInteracted, setUserInteracted] = useState(false);
   const [isInView, setIsInView] = useState(false);
+  const [hasReachedSection, setHasReachedSection] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const pauseTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -181,46 +229,50 @@ export function TeamSection() {
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsInView(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          setHasReachedSection(true);
+        } else {
+          setIsInView(false);
+        }
       },
-      { threshold: 0.2 }
+      { threshold: 0.15 }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
-  const scrollToMobileIndex = (index: number) => {
+  const scrollToMobileIndex = (index: number, behavior: ScrollBehavior = "smooth") => {
     const el = mobileScrollRef.current;
     if (!el) return;
-    const cardEl = el.children[index] as HTMLElement;
+    const targetIndex = Math.min(Math.max(index, 0), MEMBERS.length - 1);
+    const cardEl = el.children[targetIndex] as HTMLElement;
     if (cardEl) {
-      cardEl.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      cardEl.scrollIntoView({ behavior, block: "nearest", inline: "center" });
     }
   };
 
+  // Center first active card (Dhruv Sharma) in viewport ONCE when user reaches section
   useEffect(() => {
-    const el = mobileScrollRef.current;
-    if (el) {
-      const timer = setTimeout(() => {
-        const oneSetWidth = el.scrollWidth / 3;
-        el.scrollLeft = oneSetWidth;
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  }, []);
+    if (!hasReachedSection) return;
+    const timer = setTimeout(() => {
+      scrollToMobileIndex(0, "instant");
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [hasReachedSection]);
 
-  // Auto-slide horizontal slider on mobile when user reaches section
+  // Auto-slide horizontal slider on mobile ONLY when user reaches section
   useEffect(() => {
-    if (!isInView || userInteracted) return;
+    if (!isInView || !hasReachedSection || userInteracted) return;
     const interval = setInterval(() => {
       setActiveMobileIndex((prev) => {
         const next = (prev + 1) % MEMBERS.length;
-        scrollToMobileIndex(MEMBERS.length + next);
+        scrollToMobileIndex(next);
         return next;
       });
     }, 3500);
     return () => clearInterval(interval);
-  }, [isInView, userInteracted]);
+  }, [isInView, hasReachedSection, userInteracted]);
 
   const pauseAutoSlide = () => {
     setUserInteracted(true);
@@ -246,23 +298,11 @@ export function TeamSection() {
   const handleMobileScroll = () => {
     const el = mobileScrollRef.current;
     if (!el) return;
-
-    const oneSetWidth = el.scrollWidth / 3;
-    if (oneSetWidth > 0) {
-      if (el.scrollLeft < 50) {
-        el.scrollLeft = oneSetWidth + el.scrollLeft;
-      } else if (el.scrollLeft > (oneSetWidth * 2) - 50) {
-        el.scrollLeft = el.scrollLeft - oneSetWidth;
-      }
-    }
-
     const itemWidth = el.clientWidth * 0.84;
     if (itemWidth <= 0) return;
-    const index = Math.round((el.scrollLeft % (oneSetWidth || 1)) / itemWidth);
+    const index = Math.round(el.scrollLeft / itemWidth);
     setActiveMobileIndex(Math.min(Math.max(index, 0), MEMBERS.length - 1));
   };
-
-  const displayMembers = [...MEMBERS, ...MEMBERS, ...MEMBERS];
 
   return (
     <section ref={sectionRef} id="team" className="min-h-screen flex flex-col justify-center pt-24 pb-32 sm:pb-40 px-4 sm:px-6 w-full relative overflow-visible">
@@ -289,11 +329,12 @@ export function TeamSection() {
               <button
                 onClick={() => {
                   pauseAutoSlide();
-                  const prev = (activeMobileIndex - 1 + MEMBERS.length) % MEMBERS.length;
+                  const prev = Math.max(0, activeMobileIndex - 1);
                   setActiveMobileIndex(prev);
-                  scrollToMobileIndex(MEMBERS.length + prev);
+                  scrollToMobileIndex(prev);
                 }}
-                className="h-8 w-8 rounded-full border border-border flex items-center justify-center text-foreground hover:border-accent hover:text-accent transition-colors cursor-pointer"
+                disabled={activeMobileIndex === 0}
+                className="h-8 w-8 rounded-full border border-border flex items-center justify-center text-foreground disabled:opacity-30 disabled:cursor-not-allowed hover:border-accent hover:text-accent transition-colors cursor-pointer"
                 aria-label="Previous core member"
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -301,11 +342,12 @@ export function TeamSection() {
               <button
                 onClick={() => {
                   pauseAutoSlide();
-                  const next = (activeMobileIndex + 1) % MEMBERS.length;
+                  const next = Math.min(MEMBERS.length - 1, activeMobileIndex + 1);
                   setActiveMobileIndex(next);
-                  scrollToMobileIndex(MEMBERS.length + next);
+                  scrollToMobileIndex(next);
                 }}
-                className="h-8 w-8 rounded-full border border-border flex items-center justify-center text-foreground hover:border-accent hover:text-accent transition-colors cursor-pointer"
+                disabled={activeMobileIndex === MEMBERS.length - 1}
+                className="h-8 w-8 rounded-full border border-border flex items-center justify-center text-foreground disabled:opacity-30 disabled:cursor-not-allowed hover:border-accent hover:text-accent transition-colors cursor-pointer"
                 aria-label="Next core member"
               >
                 <ChevronRight className="h-4 w-4" />
@@ -321,17 +363,21 @@ export function TeamSection() {
             onScroll={handleMobileScroll}
             onTouchStart={pauseAutoSlide}
             onMouseDown={pauseAutoSlide}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-4 py-5 pb-8 scrollbar-none"
-            style={{ scrollbarWidth: "none" }}
+            className="flex overflow-x-auto snap-x snap-mandatory gap-4 py-5 pb-8 scrollbar-none px-[8vw] min-[360px]:px-[calc(50vw-140px)] min-[400px]:px-[calc(50vw-150px)]"
+            style={{
+              scrollbarWidth: "none",
+              scrollPaddingLeft: "calc(50vw - 150px)",
+              scrollPaddingRight: "calc(50vw - 150px)",
+            }}
           >
-            {displayMembers.map((m, i) => (
+            {MEMBERS.map((m, i) => (
               <MobileMemberCard
-                key={`${m.name}-${i}`}
+                key={m.name}
                 {...m}
-                isFocused={activeMobileIndex === i % MEMBERS.length}
+                isFocused={activeMobileIndex === i}
                 onSelect={() => {
                   pauseAutoSlide();
-                  setActiveMobileIndex(i % MEMBERS.length);
+                  setActiveMobileIndex(i);
                   scrollToMobileIndex(i);
                 }}
               />
@@ -345,7 +391,7 @@ export function TeamSection() {
                 onClick={() => {
                   pauseAutoSlide();
                   setActiveMobileIndex(i);
-                  scrollToMobileIndex(MEMBERS.length + i);
+                  scrollToMobileIndex(i);
                 }}
                 className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                   activeMobileIndex === i ? "w-6 bg-accent" : "w-1.5 bg-border hover:bg-muted-foreground"
