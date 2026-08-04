@@ -14,7 +14,7 @@ export function AboutSection() {
           <h2 className="font-display font-semibold text-4xl md:text-6xl tracking-tight text-accent">
             about us
           </h2>
-          <p className="mt-6 text-lg text-muted-foreground leading-relaxed text-justify">
+          <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed text-justify">
             Crosslinks is the Student & Public Relations Society of NSUT. It is one of the most
             well-known societies of our college. It brings to you everything there is to know about
             NSUT and puts our institution on a national platform. Whether it's about connecting

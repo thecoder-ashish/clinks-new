@@ -60,7 +60,7 @@ export function JoinUsModal({ triggerClass }: { triggerClass?: string }) {
           </span>
 
           <DialogHeader className="p-0 sm:text-center">
-            <DialogTitle className="font-display font-bold text-2xl sm:text-3xl text-foreground tracking-tight leading-snug">
+            <DialogTitle className="font-sans font-bold text-2xl sm:text-3xl text-foreground tracking-tight leading-snug">
               Recruitments Opening Soon!
             </DialogTitle>
           </DialogHeader>

@@ -131,7 +131,7 @@ function EventCard({ e, i }: { e: (typeof EVENTS)[number]; i: number }) {
             <div className="absolute inset-0 bg-black/10" />
           </div>
           <div className="p-6" style={{ transform: "translateZ(30px)" }}>
-            <h3 className="font-display font-extrabold text-2xl text-accent tracking-tight">{e.title}</h3>
+            <h3 className="font-sans font-bold text-xl sm:text-2xl text-accent tracking-tight">{e.title}</h3>
             <motion.div
               animate={{ height: isHovered ? "auto" : "120px" }}
               transition={{ duration: 0.3, ease: "easeInOut" }}

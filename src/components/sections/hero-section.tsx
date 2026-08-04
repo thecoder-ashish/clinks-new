@@ -47,7 +47,7 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="mt-12 sm:mt-16 inline-flex items-center gap-2 text-xs sm:text-sm text-muted-foreground hover:text-foreground cursor-pointer transition-colors"
+          className="mt-12 sm:mt-16 inline-flex items-center gap-2 font-display text-sm sm:text-base text-muted-foreground hover:text-foreground cursor-pointer transition-colors"
         >
           Scroll to explore
           <motion.span
