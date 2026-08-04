@@ -131,13 +131,6 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 700);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
