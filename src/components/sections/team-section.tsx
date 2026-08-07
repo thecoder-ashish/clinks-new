@@ -402,8 +402,12 @@ export function TeamSection() {
           </div>
         </div>
 
-        {/* Desktop Grid Layout */}
-        <div className="mt-8 sm:mt-10 hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 items-start w-full">
+        {/* Desktop Grid Layout
+            CURRENT: 3-Card Balanced Layout (grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 max-w-5xl)
+            FUTURE REVERT: To restore 4-card / multi-card grid, change className to:
+            "mt-8 sm:mt-10 hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 items-start w-full"
+        */}
+        <div className="mt-8 sm:mt-10 hidden sm:grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 items-start max-w-5xl mx-auto w-full">
           {MEMBERS.map((m, i) => (
             <MemberCard
               key={m.name}
