@@ -236,23 +236,31 @@ export function TeamSection() {
           setIsInView(false);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.35 }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
   const scrollToMobileIndex = (index: number, behavior: ScrollBehavior = "smooth") => {
-    const el = mobileScrollRef.current;
-    if (!el) return;
+    const container = mobileScrollRef.current;
+    if (!container) return;
     const targetIndex = Math.min(Math.max(index, 0), MEMBERS.length - 1);
-    const cardEl = el.children[targetIndex] as HTMLElement;
+    const cardEl = container.children[targetIndex] as HTMLElement;
     if (cardEl) {
-      cardEl.scrollIntoView({ behavior, block: "nearest", inline: "center" });
+      const containerWidth = container.clientWidth;
+      const cardLeft = cardEl.offsetLeft;
+      const cardWidth = cardEl.offsetWidth;
+      const targetScrollLeft = cardLeft - (containerWidth / 2) + (cardWidth / 2);
+
+      container.scrollTo({
+        left: Math.max(0, targetScrollLeft),
+        behavior,
+      });
     }
   };
 
-  // Center first active card (Dhruv Sharma) in viewport ONCE when user reaches section
+  // Center first active card (Dhruv Sharma) in carousel container ONCE when user reaches section
   useEffect(() => {
     if (!hasReachedSection) return;
     const timer = setTimeout(() => {
@@ -261,7 +269,7 @@ export function TeamSection() {
     return () => clearTimeout(timer);
   }, [hasReachedSection]);
 
-  // Auto-slide horizontal slider on mobile ONLY when user reaches section
+  // Auto-slide horizontal slider on mobile ONLY when user reaches section and is actively viewing it
   useEffect(() => {
     if (!isInView || !hasReachedSection || userInteracted) return;
     const interval = setInterval(() => {

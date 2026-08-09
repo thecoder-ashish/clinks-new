@@ -216,9 +216,9 @@ export function EventsSection() {
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="overflow-x-auto scrollbar-none w-full scroll-smooth pt-8 pb-16"
+        className="overflow-x-auto scrollbar-none w-full scroll-smooth pt-4 pb-16"
       >
-        <div className="flex gap-6 px-6 pb-6 max-w-6xl mx-auto items-start">
+        <div className="flex gap-6 px-6 sm:px-8 md:px-12 lg:px-24 pb-6 items-start w-max">
           {displayEvents.map((e, i) => (
             <EventCard key={`${e.title}-${i}`} e={e} i={i} />
           ))}
