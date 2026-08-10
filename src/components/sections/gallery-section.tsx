@@ -22,15 +22,15 @@ export function GallerySection() {
   const marqueeRow2 = [...row2, ...row2];
 
   return (
-    <section id="gallery" className="min-h-screen flex flex-col justify-center pt-24 pb-12 overflow-hidden gap-8">
-      <div className="max-w-6xl mx-auto px-6 w-full mb-4">
-        <p className="font-mono text-sm mb-3 text-foreground/90">// GALLERY</p>
-        <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent">
-          gallery
+    <section id="gallery" className="min-h-[92vh] sm:min-h-screen flex flex-col justify-center scroll-mt-24 sm:scroll-mt-28 py-20 sm:py-24 overflow-hidden gap-8 w-full">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full mb-2">
+        <p className="font-mono text-xs sm:text-sm mb-2 text-foreground/90">// GALLERY</p>
+        <h2 className="font-display font-semibold tracking-tight text-3xl sm:text-4xl md:text-5xl text-accent">
+          Captured Moments
         </h2>
       </div>
 
-      <div className="relative w-full overflow-x-hidden marquee-container flex flex-col gap-6">
+      <div className="relative w-full overflow-x-hidden marquee-container flex flex-col gap-2 sm:gap-3">
         {/* Inject CSS animation locally for robust cross-browser continuous marquee */}
         <style>{`
           @keyframes marqueeLeft {
@@ -58,7 +58,7 @@ export function GallerySection() {
         `}</style>
 
         {/* First Row - Scrolls Left */}
-        <div className="animate-marquee-left flex gap-6 px-4 py-4">
+        <div className="animate-marquee-left flex gap-4 sm:gap-6 px-2 py-2">
           {marqueeRow1.map((src, idx) => (
             <div
               key={`row1-${idx}`}
@@ -84,7 +84,7 @@ export function GallerySection() {
         </div>
 
         {/* Second Row - Scrolls Right */}
-        <div className="animate-marquee-right flex gap-6 px-4 py-4">
+        <div className="animate-marquee-right flex gap-4 sm:gap-6 px-2 py-2">
           {marqueeRow2.map((src, idx) => (
             <div
               key={`row2-${idx}`}

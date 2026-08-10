@@ -63,8 +63,8 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="tracking-tight text-5xl sm:text-7xl md:text-8xl leading-none inline-flex items-baseline justify-center gap-0 select-none"
         >
-          <span className="font-druk font-bold text-foreground tracking-wider text-[0.95em] sm:text-[1em]">Cross</span>
-          <span className="font-display font-bold italic text-accent lowercase">links</span>
+          <span className="font-display font-bold text-foreground tracking-tight text-[0.95em] sm:text-[1em]">Cross</span>
+          <span className="font-instrument italic font-normal text-accent lowercase text-[1.1em]">links</span>
         </motion.h1>
 
         {/* Subtitle Tagline */}

@@ -60,7 +60,7 @@ function NavTab({
     <HoverWrap className="relative">
       <button
         onClick={handleClick}
-        className={`relative z-10 px-4 py-2 text-sm sm:text-base font-medium rounded-full transition-colors duration-200 whitespace-nowrap cursor-pointer ${
+        className={`inline-flex items-center justify-center relative z-10 px-4 py-2 text-sm sm:text-base font-medium rounded-full transition-colors duration-200 whitespace-nowrap cursor-pointer ${
           active
             ? "text-accent-foreground font-semibold"
             : "text-muted-foreground hover:text-foreground"
@@ -97,7 +97,7 @@ function YearbookTab({
     <HoverWrap className="relative">
       <Link
         to="/yearbook"
-        className={`relative z-10 px-4 py-2 text-sm sm:text-base font-medium rounded-full transition-colors duration-200 whitespace-nowrap ${
+        className={`inline-flex items-center justify-center relative z-10 px-4 py-2 text-sm sm:text-base font-medium rounded-full transition-colors duration-200 whitespace-nowrap ${
           active
             ? "text-accent-foreground font-semibold"
             : "text-muted-foreground hover:text-foreground"

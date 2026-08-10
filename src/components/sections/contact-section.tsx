@@ -45,7 +45,7 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="min-h-screen flex flex-col justify-center pt-24 pb-12 px-4 sm:px-6">
+    <section id="contact" className="min-h-[92vh] sm:min-h-screen flex flex-col justify-center scroll-mt-24 sm:scroll-mt-28 py-20 sm:py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto w-full my-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div
@@ -54,8 +54,8 @@ export function ContactSection() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <p className="font-mono text-sm mb-3 text-foreground/90">// CONTACT</p>
-            <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent mb-8">
+            <p className="font-mono text-xs sm:text-sm mb-2 text-foreground/90">// CONTACT</p>
+            <h2 className="font-display font-semibold tracking-tight text-3xl sm:text-4xl md:text-5xl text-accent mb-8">
               reach out to us
             </h2>
 

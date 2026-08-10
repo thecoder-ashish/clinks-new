@@ -7,7 +7,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-[92vh] sm:min-h-screen flex flex-col items-center justify-center pt-24 sm:pt-28 pb-10 sm:pb-16 px-3 sm:px-6 overflow-hidden"
+      className="relative min-h-[85vh] sm:min-h-[90vh] flex flex-col items-center justify-center pt-24 sm:pt-28 pb-4 sm:pb-8 px-3 sm:px-6 overflow-hidden"
     >
       <div
         aria-hidden
@@ -21,8 +21,8 @@ export function HeroSection() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="tracking-tight text-6xl xs:text-7xl sm:text-8xl md:text-9xl max-w-full leading-none inline-flex items-baseline justify-center gap-0 select-none px-1"
         >
-          <span className="font-druk font-bold text-foreground tracking-wider text-[0.95em] sm:text-[1em]">Cross</span>
-          <span className="font-display font-bold italic text-accent lowercase">links</span>
+          <span className="font-display font-bold text-foreground tracking-tight text-[0.95em] sm:text-[1em]">Cross</span>
+          <span className="font-instrument italic font-normal text-accent lowercase text-[1.1em]">links</span>
         </motion.h1>
         <motion.h2
           initial={{ opacity: 0, y: 16 }}
@@ -47,7 +47,7 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="mt-12 sm:mt-16 inline-flex items-center gap-2 font-display text-sm sm:text-base text-muted-foreground hover:text-foreground cursor-pointer transition-colors"
+          className="mt-12 sm:mt-16 inline-flex items-center gap-2 font-instrument italic text-base sm:text-lg text-muted-foreground hover:text-foreground cursor-pointer transition-colors"
         >
           Scroll to explore
           <motion.span

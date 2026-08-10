@@ -17,10 +17,40 @@ const MEMBERS = [
     quote: "Bunch of undergrads with too many ideas and just enough courage to make them happen. We bring students together, turn ordinary days into memorable ones, and prove that college is about more than just academics.",
   },
   {
+    name: "Pranjul Mangla",
+    role: "VICE PRESIDENT",
+    image: "/img/core/pranjul.png",
+    quote: "{insert ek pyara sa quote}",
+  },
+  {
     name: "Muskaan Mathur",
     role: "VICE PRESIDENT",
     image: "/img/core/muskaan.jpeg",
     quote: "Crosslinks has shown me the value of teamwork and the impact of everyone’s efforts coming together. Beyond the work, it’s about building lasting friendships, enjoying every experience and creating memories we’ll always look back on.",
+  },
+  {
+    name: "Advika Sharma",
+    role: "MANAGING EDITOR",
+    image: "/img/core/advika.png",
+    quote: "{insert ek pyara sa quote}",
+  },
+  {
+    name: "Ananya Sharma",
+    role: "MANAGING EDITOR",
+    image: "/img/core/ananya.png",
+    quote: "{insert ek pyara sa quote}",
+  },
+  {
+    name: "Amitesh Anshul",
+    role: "MANAGING EDITOR",
+    image: "/img/core/amitesh.png",
+    quote: "{insert ek pyara sa quote}",
+  },
+  {
+    name: "Nishi",
+    role: "HEAD OF CONTENT",
+    image: "/img/core/nishi.png",
+    quote: "{insert ek pyara sa quote}",
   },
 ];
 
@@ -104,9 +134,8 @@ function MemberCard({
         onPointerDown={handlePointerDown}
         onPointerUp={() => setPressed(false)}
         onMouseMove={handleMouseMove}
-        className={`absolute top-0 inset-x-0 rounded-2xl cursor-pointer transition-all duration-300 ${
-          active ? "z-40" : "z-10"
-        }`}
+        className={`absolute top-0 inset-x-0 rounded-2xl cursor-pointer transition-all duration-300 ${active ? "z-40" : "z-10"
+          }`}
         style={{
           transform: active
             ? `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.04)`
@@ -126,9 +155,8 @@ function MemberCard({
 
         {/* Main Card Content Container */}
         <div
-          className={`p-6 sm:p-7 rounded-2xl transition-all duration-300 bg-card border shadow-sm relative z-10 ${
-            active ? "border-accent/80 shadow-md" : "border-border/70"
-          }`}
+          className={`p-6 sm:p-7 rounded-2xl transition-all duration-300 bg-card border shadow-sm relative z-10 ${active ? "border-accent/80 shadow-md" : "border-border/70"
+            }`}
           style={{ transform: "translateZ(0px)" }}
         >
           <div style={{ transform: "translateZ(20px)" }}>
@@ -178,37 +206,37 @@ function MobileMemberCard({
   return (
     <div
       onClick={onSelect}
-      className={`w-[84vw] max-w-[300px] snap-center shrink-0 rounded-2xl cursor-pointer relative py-2 transition-all duration-300 select-none ${
-        isFocused ? "-translate-y-1 scale-[1.02]" : "scale-[0.97]"
-      }`}
-    >
-      {/* Soft Backlight Side Glow when focused */}
-      <div
-        className="absolute inset-0 rounded-2xl bg-accent/25 transition-opacity duration-500 blur-lg pointer-events-none"
-        style={{ opacity: isFocused ? 1 : 0 }}
-      />
-
-      {/* Main Card */}
-      <div
-        className={`p-5 rounded-2xl bg-card border shadow-sm flex flex-col justify-between transition-all duration-300 relative z-10 ${
-          isFocused ? "border-accent/80 shadow-md" : "border-border/70"
+      className={`w-[84vw] max-w-[300px] snap-center shrink-0 rounded-2xl cursor-pointer relative transition-all duration-300 select-none ${isFocused ? "-translate-y-1 scale-[1.02]" : "scale-[0.97]"
         }`}
-      >
-        <div>
-          <div className="h-16 w-16 rounded-full overflow-hidden bg-muted mx-auto ring-2 ring-accent/40 flex-shrink-0 transition-transform duration-300">
-            <img src={image} alt={name} className="h-full w-full object-cover" />
-          </div>
-          <div className="mt-2.5 text-center">
-            <h3 className="font-sans font-bold text-base text-foreground tracking-tight">{name}</h3>
-            <p className="text-[10px] text-accent font-mono font-normal mt-0.5 tracking-wide uppercase">{role}</p>
-          </div>
-        </div>
+    >
+      {/* Main Card with Dynamic Glow Hugging Content Height */}
+      <div className="relative w-full h-auto">
+        {/* Soft Backlight Glow matched to exact card dimensions */}
+        <div
+          className="absolute -inset-0.5 rounded-2xl bg-accent/30 transition-opacity duration-300 blur-md pointer-events-none"
+          style={{ opacity: isFocused ? 1 : 0 }}
+        />
 
-        {quote && (
-          <p className="mt-3 text-xs sm:text-sm italic text-foreground/90 font-medium text-center border-t border-border/50 pt-3 leading-relaxed font-sans">
-            "{quote}"
-          </p>
-        )}
+        <div
+          className={`p-5 rounded-2xl bg-card border shadow-sm flex flex-col justify-between transition-all duration-300 relative z-10 ${isFocused ? "border-accent/80 shadow-md" : "border-border/70"
+            }`}
+        >
+          <div>
+            <div className="h-16 w-16 rounded-full overflow-hidden bg-muted mx-auto ring-2 ring-accent/40 flex-shrink-0 transition-transform duration-300">
+              <img src={image} alt={name} className="h-full w-full object-cover" />
+            </div>
+            <div className="mt-2.5 text-center">
+              <h3 className="font-sans font-bold text-base text-foreground tracking-tight">{name}</h3>
+              <p className="text-[10px] text-accent font-mono font-normal mt-0.5 tracking-wide uppercase">{role}</p>
+            </div>
+          </div>
+
+          {quote && (
+            <p className="mt-3 text-xs sm:text-sm italic text-foreground/90 font-medium text-center border-t border-border/50 pt-3 leading-relaxed font-sans">
+              "{quote}"
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -313,7 +341,7 @@ export function TeamSection() {
   };
 
   return (
-    <section ref={sectionRef} id="team" className="min-h-screen flex flex-col justify-center pt-24 pb-32 sm:pb-40 px-4 sm:px-6 w-full relative overflow-visible">
+    <section ref={sectionRef} id="team" className="min-h-[92vh] sm:min-h-screen flex flex-col justify-center scroll-mt-24 sm:scroll-mt-28 py-20 sm:py-24 px-4 sm:px-6 w-full relative overflow-visible">
       <div className="max-w-6xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -323,9 +351,9 @@ export function TeamSection() {
           className="flex items-end justify-between gap-4"
         >
           <div>
-            <p className="font-mono text-sm mb-3 text-foreground/90">// TEAM</p>
-            <h2 className="font-display font-semibold tracking-tight text-4xl md:text-6xl text-accent">
-              words from core
+            <p className="font-mono text-xs sm:text-sm mb-2 text-foreground/90">// TEAM</p>
+            <h2 className="font-display font-semibold tracking-tight text-3xl sm:text-4xl md:text-5xl text-accent">
+              Words From Core
             </h2>
           </div>
           {/* Mobile Carousel Arrow Controls & Step Counter */}
@@ -365,13 +393,13 @@ export function TeamSection() {
         </motion.div>
 
         {/* Mobile Auto-Sliding Horizontal Snap Carousel */}
-        <div className="mt-8 block sm:hidden">
+        <div className="mt-6 block sm:hidden">
           <div
             ref={mobileScrollRef}
             onScroll={handleMobileScroll}
             onTouchStart={pauseAutoSlide}
             onMouseDown={pauseAutoSlide}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-4 py-5 pb-8 scrollbar-none px-[8vw] min-[360px]:px-[calc(50vw-140px)] min-[400px]:px-[calc(50vw-150px)]"
+            className="flex items-start overflow-x-auto snap-x snap-mandatory gap-4 py-5 pb-8 scrollbar-none px-[8vw] min-[360px]:px-[calc(50vw-140px)] min-[400px]:px-[calc(50vw-150px)]"
             style={{
               scrollbarWidth: "none",
               scrollPaddingLeft: "calc(50vw - 150px)",
@@ -401,21 +429,16 @@ export function TeamSection() {
                   setActiveMobileIndex(i);
                   scrollToMobileIndex(i);
                 }}
-                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  activeMobileIndex === i ? "w-6 bg-accent" : "w-1.5 bg-border hover:bg-muted-foreground"
-                }`}
+                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${activeMobileIndex === i ? "w-6 bg-accent" : "w-1.5 bg-border hover:bg-muted-foreground"
+                  }`}
                 aria-label={`Go to slide ${i + 1}`}
               />
             ))}
           </div>
         </div>
 
-        {/* Desktop Grid Layout
-            CURRENT: 3-Card Balanced Layout (grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 max-w-5xl)
-            FUTURE REVERT: To restore 4-card / multi-card grid, change className to:
-            "mt-8 sm:mt-10 hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 items-start w-full"
-        */}
-        <div className="mt-8 sm:mt-10 hidden sm:grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 items-start max-w-5xl mx-auto w-full">
+        {/* Desktop 2-Row 4-Column Balanced Grid Layout */}
+        <div className="mt-8 sm:mt-10 hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 items-start max-w-6xl mx-auto w-full">
           {MEMBERS.map((m, i) => (
             <MemberCard
               key={m.name}

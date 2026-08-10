@@ -61,18 +61,18 @@ export function JoinUsModal({ triggerClass }: { triggerClass?: string }) {
 
           <DialogHeader className="p-0 sm:text-center">
             <DialogTitle className="font-sans font-bold text-2xl sm:text-3xl text-foreground tracking-tight leading-snug">
-              Recruitments Opening Soon!
+              Recruitment Forms Are Out!
             </DialogTitle>
           </DialogHeader>
 
           <p className="mt-3 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-            We are preparing to welcome the next batch of creators, storytellers, event managers, and designers to <span className="text-foreground font-semibold">Crosslinks</span> — the official PR & Media society of NSUT.
+            Apply now to join the next batch of creators, storytellers, event managers, and designers at <span className="text-foreground font-semibold">Crosslinks</span> — the official PR & Media society of NSUT.
           </p>
 
           {/* Department Tags */}
           <div className="mt-5 flex flex-wrap justify-center gap-2">
             {[
-              "📸 Photography & Film",
+              "📸 Photography",
               "🎨 Graphic Design",
               "🎬 Video Editing",
               "💻 Tech",
@@ -89,17 +89,20 @@ export function JoinUsModal({ triggerClass }: { triggerClass?: string }) {
 
           <div className="mt-6 w-full p-3.5 rounded-xl bg-accent/10 border border-accent/20 flex items-center gap-2.5 text-left text-xs text-foreground/90 font-medium">
             <CheckCircle2 className="h-4 w-4 text-accent shrink-0" />
-            <span>Follow our socials & keep your notifications on for application drop updates!</span>
+            <span>Click below to head directly to the official recruitment portal & submit your application!</span>
           </div>
 
-          {/* Close Action Button */}
-          <button
+          {/* Apply External Action Button */}
+          <a
+            href="https://recruitment.crosslinks.com"
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => setOpen(false)}
-            className="mt-6 w-full py-3 rounded-xl bg-accent text-accent-foreground font-semibold text-sm shadow-md hover:opacity-95 transition-opacity cursor-pointer inline-flex items-center justify-center gap-1.5"
+            className="mt-6 w-full py-3 rounded-xl bg-accent text-accent-foreground font-semibold text-sm shadow-md hover:opacity-95 transition-all duration-300 cursor-pointer inline-flex items-center justify-center gap-2 hover:scale-[1.02]"
           >
-            <span>Stay Tuned!</span>
+            <span>Fill Application Form</span>
             <ArrowRight className="h-4 w-4" />
-          </button>
+          </a>
         </div>
       </DialogContent>
     </Dialog>

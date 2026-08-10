@@ -82,17 +82,19 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
+    title: "Crosslinks NSUT | PR & Media society of NSUT",
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { name: "description", content: "Crosslinks is the official Student & Public Relations & Media Society of Netaji Subhas University of Technology (NSUT)." },
+      { name: "author", content: "Crosslinks NSUT" },
+      { property: "og:title", content: "Crosslinks NSUT | PR & Media society of NSUT" },
+      { property: "og:description", content: "Crosslinks is the official Student & Public Relations & Media Society of Netaji Subhas University of Technology (NSUT)." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { property: "og:site_name", content: "Crosslinks NSUT" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Crosslinks NSUT | PR & Media society of NSUT" },
+      { name: "twitter:description", content: "Crosslinks is the official Student & Public Relations & Media Society of Netaji Subhas University of Technology (NSUT)." },
     ],
     links: [
       {
@@ -103,7 +105,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@200;300;400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;500;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@200;300;400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;500;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&display=swap",
       },
     ],
   }),
@@ -117,6 +119,7 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <title>Crosslinks NSUT | PR & Media society of NSUT</title>
         <HeadContent />
       </head>
       <body>

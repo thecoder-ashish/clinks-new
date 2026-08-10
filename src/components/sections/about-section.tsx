@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export function AboutSection() {
   return (
-    <section id="about" className="min-h-screen flex flex-col justify-center items-center pt-24 pb-12 px-4 sm:px-6">
+    <section id="about" className="min-h-[92vh] sm:min-h-screen flex flex-col justify-center scroll-mt-24 sm:scroll-mt-28 py-20 sm:py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -10,9 +10,9 @@ export function AboutSection() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <p className="font-mono text-sm mb-3 text-foreground/90">// ABOUT US</p>
-          <h2 className="font-display font-semibold text-4xl md:text-6xl tracking-tight text-accent">
-            about us
+          <p className="font-mono text-xs sm:text-sm mb-2 text-foreground/90">// ABOUT US</p>
+          <h2 className="font-display font-semibold text-3xl sm:text-4xl md:text-5xl tracking-tight text-accent">
+            Who We Are
           </h2>
           <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed text-justify">
             Crosslinks is the Student & Public Relations Society of NSUT. It is one of the most
