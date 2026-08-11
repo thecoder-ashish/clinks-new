@@ -94,7 +94,7 @@ export function JoinUsModal({ triggerClass }: { triggerClass?: string }) {
 
           {/* Apply External Action Button */}
           <a
-            href="https://recruitment.crosslinks.com"
+            href="https://recruitment.crosslinks.in"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
