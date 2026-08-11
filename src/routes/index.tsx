@@ -10,7 +10,7 @@ import { ContactSection } from "@/components/sections/contact-section";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Crosslinks NSUT — The student community at NSUT" },
+      { title: "Crosslinks | The Face of NSUT" },
       { name: "description", content: "Crosslinks is NSUT's Student & Public Relations Society. Connecting students, authorities, and alumni." },
       { property: "og:title", content: "Crosslinks NSUT" },
       { property: "og:description", content: "The Student & Public Relations Society of NSUT." },

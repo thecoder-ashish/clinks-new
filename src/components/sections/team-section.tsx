@@ -20,7 +20,7 @@ const MEMBERS = [
     name: "Pranjul Mangla",
     role: "VICE PRESIDENT",
     image: "/img/core/pranjul.png",
-    quote: "{insert ek pyara sa quote}",
+    quote: "",
   },
   {
     name: "Muskaan Mathur",
@@ -32,25 +32,25 @@ const MEMBERS = [
     name: "Advika Sharma",
     role: "MANAGING EDITOR",
     image: "/img/core/advika.png",
-    quote: "{insert ek pyara sa quote}",
+    quote: "",
   },
   {
     name: "Ananya Sharma",
     role: "MANAGING EDITOR",
     image: "/img/core/ananya.png",
-    quote: "{insert ek pyara sa quote}",
+    quote: "",
   },
   {
     name: "Amitesh Anshul",
     role: "MANAGING EDITOR",
     image: "/img/core/amitesh.png",
-    quote: "{insert ek pyara sa quote}",
+    quote: "",
   },
   {
     name: "Nishi",
     role: "HEAD OF CONTENT",
     image: "/img/core/nishi.png",
-    quote: "{insert ek pyara sa quote}",
+    quote: "",
   },
 ];
 
