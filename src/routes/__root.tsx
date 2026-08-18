@@ -86,15 +86,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "description", content: "Crosslinks is the official Student & Public Relations & Media Society of Netaji Subhas University of Technology (NSUT)." },
+      { name: "description", content: "The official Student, Public Relations & Media Society of Netaji Subhas University of Technology (NSUT). Exploring campus life, hosting marquee events, yearbooks, and media coverage." },
       { name: "author", content: "Crosslinks NSUT" },
+      { name: "theme-color", content: "#2DA049" },
       { property: "og:title", content: "Crosslinks NSUT | PR & Media society of NSUT" },
-      { property: "og:description", content: "Crosslinks is the official Student & Public Relations & Media Society of Netaji Subhas University of Technology (NSUT)." },
+      { property: "og:description", content: "The official Student, Public Relations & Media Society of Netaji Subhas University of Technology (NSUT). Exploring campus life, hosting marquee events, yearbooks, and media coverage." },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Crosslinks NSUT" },
+      { property: "og:image", content: "/og-image.png" },
+      { property: "og:image:secure_url", content: "/og-image.png" },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Crosslinks NSUT Logo Banner" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Crosslinks NSUT | PR & Media society of NSUT" },
-      { name: "twitter:description", content: "Crosslinks is the official Student & Public Relations & Media Society of Netaji Subhas University of Technology (NSUT)." },
+      { name: "twitter:description", content: "The official Student, Public Relations & Media Society of Netaji Subhas University of Technology (NSUT)." },
+      { name: "twitter:image", content: "/og-image.png" },
+      { name: "twitter:image:alt", content: "Crosslinks NSUT Logo Banner" },
     ],
     links: [
       {
@@ -117,9 +126,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" prefix="og: https://ogp.me/ns#">
       <head>
         <title>Crosslinks NSUT | PR & Media society of NSUT</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="The official Student, Public Relations & Media Society of Netaji Subhas University of Technology (NSUT). Exploring campus life, hosting marquee events, yearbooks, and media coverage." />
+        <meta name="theme-color" content="#2DA049" />
+        
+        {/* Open Graph / WhatsApp / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Crosslinks NSUT" />
+        <meta property="og:title" content="Crosslinks NSUT | PR & Media society of NSUT" />
+        <meta property="og:description" content="The official Student, Public Relations & Media Society of Netaji Subhas University of Technology (NSUT). Exploring campus life, hosting marquee events, yearbooks, and media coverage." />
+        <meta property="og:image" content="/og-image.png" />
+        <meta property="og:image:secure_url" content="/og-image.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Crosslinks NSUT Logo Banner" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Crosslinks NSUT | PR & Media society of NSUT" />
+        <meta name="twitter:description" content="The official Student, Public Relations & Media Society of Netaji Subhas University of Technology (NSUT)." />
+        <meta name="twitter:image" content="/og-image.png" />
+        <meta name="twitter:image:alt" content="Crosslinks NSUT Logo Banner" />
+
         <HeadContent />
       </head>
       <body>
