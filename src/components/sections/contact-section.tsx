@@ -35,7 +35,7 @@ function Fab({ Icon, href, label }: (typeof SOCIALS)[number]) {
 export function ContactSection() {
   const [copied, setCopied] = useState(false);
   const { setHovered } = useHoverTarget();
-  const email = "crosslinks.nsut@gmail.com";
+  const email = "crosslinkshelpline@gmail.com";
 
   const copyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -74,8 +74,8 @@ export function ContactSection() {
 
               <div className="flex items-center gap-4">
                 <Phone className="h-6 w-6 text-accent flex-shrink-0" />
-                <a href="tel:+918888604009" className="hover:text-accent transition-colors">
-                  +91 8888604009
+                <a href="tel:+919773875157" className="hover:text-accent transition-colors">
+                  +91 9773875157
                 </a>
               </div>
 
