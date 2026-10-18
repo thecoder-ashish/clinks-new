@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Sparkles, UserPlus, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Sparkles, UserPlus, ArrowRight, Clock } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -61,22 +61,22 @@ export function JoinUsModal({ triggerClass }: { triggerClass?: string }) {
 
           <DialogHeader className="p-0 sm:text-center">
             <DialogTitle className="font-sans font-bold text-2xl sm:text-3xl text-foreground tracking-tight leading-snug">
-              Recruitment Forms Are Out!
+              Recruitment Under Process
             </DialogTitle>
           </DialogHeader>
 
           <p className="mt-3 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-            Apply now to join the next batch of creators, storytellers, event managers, and designers at <span className="text-foreground font-semibold">Crosslinks</span> — the official PR & Media society of NSUT.
+            Applications to join the next batch of creators, storytellers, event managers, and designers at <span className="text-foreground font-semibold">Crosslinks</span> are now closed and currently under review.
           </p>
 
           {/* Department Tags */}
           <div className="mt-5 flex flex-wrap justify-center gap-2">
             {[
-              "📸 Photography",
-              "🎨 Graphic Design",
-              "🎬 Video Editing",
-              "💻 Tech",
-              "✍️ Content",
+              "Photography",
+              "Graphic Design",
+              "Video Editing",
+              "Tech",
+              "Content",
             ].map((tag) => (
               <span
                 key={tag}
@@ -88,8 +88,8 @@ export function JoinUsModal({ triggerClass }: { triggerClass?: string }) {
           </div>
 
           <div className="mt-6 w-full p-3.5 rounded-xl bg-accent/10 border border-accent/20 flex items-center gap-2.5 text-left text-xs text-foreground/90 font-medium">
-            <CheckCircle2 className="h-4 w-4 text-accent shrink-0" />
-            <span>Click below to head directly to the official recruitment portal & submit your application!</span>
+            <Clock className="h-4 w-4 text-accent shrink-0" />
+            <span>Applications are closed. Visit the official portal for status updates and announcements!</span>
           </div>
 
           {/* Apply External Action Button */}
@@ -100,7 +100,7 @@ export function JoinUsModal({ triggerClass }: { triggerClass?: string }) {
             onClick={() => setOpen(false)}
             className="mt-6 w-full py-3 rounded-xl bg-accent text-accent-foreground font-semibold text-sm shadow-md hover:opacity-95 transition-all duration-300 cursor-pointer inline-flex items-center justify-center gap-2 hover:scale-[1.02]"
           >
-            <span>Fill Application Form</span>
+            <span>Visit Recruitment Portal</span>
             <ArrowRight className="h-4 w-4" />
           </a>
         </div>
