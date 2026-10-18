@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -133,7 +134,7 @@ function RootShell({ children }: { children: ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="The official Student, Public Relations & Media Society of Netaji Subhas University of Technology (NSUT). Exploring campus life, hosting marquee events, yearbooks, and media coverage." />
         <meta name="theme-color" content="#2DA049" />
-        
+
         {/* Open Graph / WhatsApp / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Crosslinks NSUT" />
